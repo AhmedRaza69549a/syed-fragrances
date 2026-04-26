@@ -12,7 +12,7 @@
     <style>
         :root {
             --black: #0a0a0a;
-            --white: #F8F6F2; /* Slightly warm off-white for luxury feel */
+            --white: #F8F6F2;
             --gold: #C4A35A;
             --mid: #888;
             --border: #E0DDD6;
@@ -35,12 +35,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── HEADER ── */
+        /* ── HEADER (Centered Logo) ── */
         header {
-            padding: 0 5%;
-            height: 90px;
-            display: flex;
-            justify-content: space-between;
+            padding: 15px 5%;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Creates 3 columns to perfectly center the middle item */
             align-items: center;
             border-bottom: 0.5px solid var(--border);
             position: sticky;
@@ -50,15 +49,24 @@
             z-index: 100;
         }
 
+        .header-left {
+            /* Empty space to balance the grid */
+        }
+
         .logo-container {
             display: flex;
-            align-items: center;
+            justify-content: center;
             text-decoration: none;
         }
 
         .logo-container img {
-            height: 140px; 
+            height: 180px; /* Increased size, no longer restricted by a fixed header height */
             object-fit: contain;
+        }
+
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
         }
 
         .cart-btn {
@@ -79,9 +87,9 @@
             color: var(--white);
         }
 
-        /* ── HERO SECTION ── */
+        /* ── HERO SECTION (Video Background) ── */
         .hero {
-            height: 75vh;
+            height: 85vh; /* slightly taller */
             background-color: var(--black);
             color: var(--white);
             display: flex;
@@ -92,6 +100,22 @@
             padding: 0 5%;
             position: relative;
             overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.5; /* Darkens the video so the white text stays readable */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1; /* Puts the text on top of the video */
         }
 
         .hero-label {
@@ -113,13 +137,14 @@
 
         .hero h1 em {
             font-style: italic;
-            color: var(--mid);
+            color: var(--gold);
         }
 
         .hero p {
             font-size: 14px;
-            color: #999;
+            color: #ccc;
             max-width: 500px;
+            margin: 0 auto;
             line-height: 2;
             letter-spacing: 0.05em;
         }
@@ -147,7 +172,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2px;
-            background: var(--border); /* Creates ultra-thin borders between items */
+            background: var(--border);
             border: 0.5px solid var(--border);
         }
 
@@ -322,159 +347,11 @@
 <body>
 
     <header>
+        <div class="header-left"></div>
         <a href="#" class="logo-container">
             <img src="logo.png" alt="Syed Fragrances Logo"> 
         </a>
-        <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+        <div class="header-right">
+            <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+        </div>
     </header>
-
-    <section class="hero">
-        <p class="hero-label">Est. 2024</p>
-        <h1>The art of<br><em>invisible</em> presence</h1>
-        <p>Crafted with uncompromising standards and the rarest raw materials. A private conversation between you and the world.</p>
-    </section>
-
-    <main class="collection-section">
-        <div class="section-header">
-            <h2 class="section-title">The Collection</h2>
-            <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 24px auto;"></div>
-        </div>
-        <div class="grid" id="product-grid">
-            </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
-    </footer>
-
-    <div id="cart-modal">
-        <div class="cart-header">
-            <h2>Your Cart</h2>
-            <button class="close-cart" onclick="toggleCart()">×</button>
-        </div>
-        <div class="cart-items" id="cart-items-container"></div>
-        <div class="cart-footer">
-            <h3 style="margin-bottom: 24px; display: flex; justify-content: space-between; font-family: var(--serif); font-size: 24px; font-weight: 400;">
-                <span>Total</span>
-                <span id="cart-total">Rs. 0</span>
-            </h3>
-            
-            <div class="checkout-form">
-                <input type="text" id="cust-name" placeholder="Full Name" required>
-                <input type="text" id="cust-address" placeholder="Delivery Address" required>
-            </div>
-
-            <button class="whatsapp-checkout" onclick="checkoutViaWhatsApp()">Checkout via WhatsApp</button>
-        </div>
-    </div>
-
-    <script>
-        const WHATSAPP_NUMBER = "ENTER_NEW_NUMBER_HERE"; 
-
-        const products = [
-            { id: 1, name: "Oud Noir", price: 4500 },
-            { id: 2, name: "Velvet Rose", price: 3800 },
-            { id: 3, name: "Sandalwood Reserve", price: 5200 },
-            { id: 4, name: "Amber Blanc", price: 4100 }
-        ];
-
-        let cart = [];
-
-        function renderProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <div class="product-placeholder">Image Space</div>
-                    <h3 class="product-title">${product.name}</h3>
-                    <p class="product-price">Rs. ${product.price.toLocaleString()}</p>
-                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
-                </div>
-            `).join('');
-        }
-
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            updateCartUI();
-            
-            const modal = document.getElementById('cart-modal');
-            if(modal.style.display !== 'flex') {
-                toggleCart();
-            }
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cart-items-container');
-            const countSpan = document.getElementById('cart-count');
-            const totalSpan = document.getElementById('cart-total');
-
-            countSpan.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
-            let total = 0;
-            container.innerHTML = cart.map(item => {
-                total += item.price * item.quantity;
-                return `
-                    <div class="cart-item">
-                        <div>
-                            <div class="cart-item-title">${item.name}</div>
-                            <p style="font-size: 11px; color: #888; letter-spacing: 0.1em; text-transform: uppercase;">Qty: ${item.quantity}</p>
-                        </div>
-                        <p style="font-size: 14px;">Rs. ${(item.price * item.quantity).toLocaleString()}</p>
-                    </div>
-                `;
-            }).join('');
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color: #888; margin-top: 40px; font-size: 14px;">Your cart is empty.</p>';
-            }
-
-            totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
-        }
-
-        function toggleCart() {
-            const modal = document.getElementById('cart-modal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function checkoutViaWhatsApp() {
-            if (cart.length === 0) {
-                alert("Your cart is empty.");
-                return;
-            }
-
-            const name = document.getElementById('cust-name').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-
-            if (!name || !address) {
-                alert("Please enter your name and delivery address.");
-                return;
-            }
-
-            let message = `*New Order - Syed Fragrances*\n\n`;
-            message += `*Customer:* ${name}\n`;
-            message += `*Address:* ${address}\n\n`;
-            message += `*Order Details:*\n`;
-            
-            let total = 0;
-            cart.forEach(item => {
-                message += `- ${item.quantity}x ${item.name} (Rs. ${item.price * item.quantity})\n`;
-                total += item.price * item.quantity;
-            });
-
-            message += `\n*Total Due: Rs. ${total.toLocaleString()}*\n\n`;
-            message += `Please confirm delivery details and payment method.`;
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
-        }
-
-        renderProducts();
-    </script>
-</body>
-</html>

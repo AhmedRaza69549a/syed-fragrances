@@ -35,7 +35,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── HEADER ── */
         header {
             padding: 15px 5%;
             display: grid;
@@ -48,8 +47,6 @@
             backdrop-filter: blur(10px);
             z-index: 100;
         }
-
-        .header-left { }
 
         .logo-container {
             display: flex;
@@ -85,7 +82,6 @@
             color: var(--white);
         }
 
-        /* ── HERO SECTION ── */
         .hero {
             height: 85vh;
             background-color: var(--black);
@@ -146,7 +142,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* ── PRODUCT GRID ── */
         .collection-section {
             padding: 100px 5%;
             max-width: 1400px;
@@ -240,7 +235,6 @@
             color: var(--white);
         }
 
-        /* ── CART MODAL ── */
         #cart-modal {
             display: none;
             position: fixed;
@@ -338,7 +332,6 @@
             background: #333;
         }
 
-        /* ── FOOTER ── */
         footer {
             background: var(--black);
             color: var(--white);
@@ -364,8 +357,8 @@
 
     <section class="hero">
         <video class="hero-video" autoplay loop muted playsinline>
-    <source src="hero.mp4" type="video/mp4">
-</video>
+            <source src="hero.mp4" type="video/mp4">
+        </video>
         <div class="hero-content">
             <p class="hero-label">Est. 2024</p>
             <h1>The art of<br><em>invisible</em> presence</h1>
@@ -403,18 +396,18 @@
                 <input type="text" id="cust-address" placeholder="Delivery Address" required>
             </div>
 
-            <button class="whatsapp-checkout" onclick="checkoutViaWhatsApp()">Checkout via WhatsApp</button>
+            <button class="whatsapp-checkout" onclick="checkoutViaWhatsApp()">Place Order</button>
         </div>
     </div>
 
     <script>
-        const WHATSAPP_NUMBER = "ENTER_NEW_NUMBER_HERE"; 
+        const WHATSAPP_NUMBER = ""; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxy5H5Pf2KsDuNq2kf6YfcO_WEiICg-4wYvNAQJPpY5kp-KtfPV6wDIr4vseAj-CBvG/exec"; 
 
-        // Fully Updated Catalog (22 Items)
         const products = [
-            { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png" },
-            { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml", image: "gucci bloom.png" },
-            { id: 3, name: "Impression of Erba Pura", price: 2500, size: "50 ml", image: "erba pura.png" },
+            { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml" image: "sensation.png" },
+            { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml" image: "gucci bloom.png" }, },
+            { id: 3, name: "Impression of Erba Pura", price: 2500, size: "50 ml" image: "erba pura.png" },
             { id: 4, name: "Impression of Sabaya", price: 2500, size: "50 ml" },
             { id: 5, name: "Impression of SRK", price: 2500, size: "50 ml" },
             { id: 6, name: "Impression of Azzaro Wanted", price: 2500, size: "50 ml" },
@@ -425,7 +418,7 @@
             { id: 11, name: "Impression of Bombshell", price: 2500, size: "50 ml" },
             { id: 12, name: "Impression of Hugo boss", price: 2500, size: "50 ml" },
             { id: 13, name: "Impression of Creed Aventus", price: 2500, size: "50 ml" },
-            { id: 14, name: "Impression of Zarar", price: 2500, size: "50 ml", image: "zarar.png" },
+            { id: 14, name: "Impression of Zarar", price: 2500, size: "50 ml", image: "zarar.jpg" },
             { id: 15, name: "Impression of David Beckham", price: 2500, size: "50 ml" },
             { id: 16, name: "Impression of Uroosa", price: 2500, size: "50 ml" },
             { id: 17, name: "Impression of 502", price: 2500, size: "50 ml" },
@@ -438,12 +431,9 @@
 
         let cart = [];
 
-       function renderProducts() {
+        function renderProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map(product => {
-                
-                // This checks if you have added an image for the product. 
-                // If yes, it shows the photo. If no, it keeps the black "Image Space" box.
                 let imageHtml = product.image 
                     ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`
                     : `Image Space`;
@@ -526,7 +516,6 @@
                 return;
             }
 
-            // Build the order summary
             let orderString = "";
             let total = 0;
             cart.forEach(item => {
@@ -534,7 +523,6 @@
                 total += item.price * item.quantity;
             });
 
-            // Prepare the data to send to Google Sheets
             const orderData = {
                 name: name,
                 address: address,
@@ -542,54 +530,31 @@
                 total: total
             };
 
-            // PASTE YOUR WEB APP URL HERE:
-            const scriptURL = "https://script.google.com/macros/s/AKfycbxy5H5Pf2KsDuNq2kf6YfcO_WEiICg-4wYvNAQJPpY5kp-KtfPV6wDIr4vseAj-CBvG/exec";
-
-            // Send data silently to your sheet, then open WhatsApp
-            fetch(scriptURL, {
+            fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(orderData)
             }).then(() => {
-                let message = `*New Order - Syed Fragrances*\n\n`;
-                message += `*Customer:* ${name}\n`;
-                message += `*Address:* ${address}\n\n`;
-                message += `*Order Details:*\n`;
-                message += orderString;
-                message += `\n*Total Due: Rs. ${total.toLocaleString()}*\n\n`;
-                message += `Please confirm delivery details and payment method.`;
+                if (WHATSAPP_NUMBER === "") {
+                    alert("Order successfully logged! We will contact you shortly to confirm.");
+                    cart = []; 
+                    updateCartUI();
+                    toggleCart();
+                } else {
+                    let message = `*New Order - Syed Fragrances*\n\n`;
+                    message += `*Customer:* ${name}\n`;
+                    message += `*Address:* ${address}\n\n`;
+                    message += `*Order Details:*\n`;
+                    message += orderString;
+                    message += `\n*Total Due: Rs. ${total.toLocaleString()}*\n\n`;
+                    message += `Please confirm delivery details and payment method.`;
 
-                const encodedMessage = encodeURIComponent(message);
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+                    const encodedMessage = encodeURIComponent(message);
+                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+                }
             }).catch(error => {
                 alert("There was an issue processing the order. Please try again.");
             });
-        }
-
-            const name = document.getElementById('cust-name').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-
-            if (!name || !address) {
-                alert("Please enter your name and delivery address.");
-                return;
-            }
-
-            let message = `*New Order - Syed Fragrances*\n\n`;
-            message += `*Customer:* ${name}\n`;
-            message += `*Address:* ${address}\n\n`;
-            message += `*Order Details:*\n`;
-            
-            let total = 0;
-            cart.forEach(item => {
-                message += `- ${item.quantity}x ${item.name} (${item.size}) - Rs. ${item.price * item.quantity}\n`;
-                total += item.price * item.quantity;
-            });
-
-            message += `\n*Total Due: Rs. ${total.toLocaleString()}*\n\n`;
-            message += `Please confirm delivery details and payment method.`;
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
         }
 
         renderProducts();

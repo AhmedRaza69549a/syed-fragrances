@@ -526,6 +526,54 @@
                 return;
             }
 
+            // Build the order summary
+            let orderString = "";
+            let total = 0;
+            cart.forEach(item => {
+                orderString += `- ${item.quantity}x ${item.name} (${item.size}) - Rs. ${item.price * item.quantity}\n`;
+                total += item.price * item.quantity;
+            });
+
+            // Prepare the data to send to Google Sheets
+            const orderData = {
+                name: name,
+                address: address,
+                orderDetails: orderString,
+                total: total
+            };
+
+            // PASTE YOUR WEB APP URL HERE:
+            const scriptURL = "ENTER_YOUR_WEB_APP_URL_HERE";
+
+            // Send data silently to your sheet, then open WhatsApp
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(orderData)
+            }).then(() => {
+                let message = `*New Order - Syed Fragrances*\n\n`;
+                message += `*Customer:* ${name}\n`;
+                message += `*Address:* ${address}\n\n`;
+                message += `*Order Details:*\n`;
+                message += orderString;
+                message += `\n*Total Due: Rs. ${total.toLocaleString()}*\n\n`;
+                message += `Please confirm delivery details and payment method.`;
+
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+            }).catch(error => {
+                alert("There was an issue processing the order. Please try again.");
+            });
+        }
+
+            const name = document.getElementById('cust-name').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            if (!name || !address) {
+                alert("Please enter your name and delivery address.");
+                return;
+            }
+
             let message = `*New Order - Syed Fragrances*\n\n`;
             message += `*Customer:* ${name}\n`;
             message += `*Address:* ${address}\n\n`;

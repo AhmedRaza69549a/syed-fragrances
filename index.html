@@ -443,6 +443,30 @@
             margin-bottom: 30px;
         }
 
+        /* ── ORDER CONFIRMATION MODAL ── */
+        #confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .confirm-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 450px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
         footer {
             background: var(--black);
             color: var(--white);
@@ -514,7 +538,7 @@
                 </label>
             </div>
 
-            <button class="whatsapp-checkout" onclick="checkoutViaWhatsApp()">Place Order</button>
+            <button class="whatsapp-checkout" id="checkout-btn" onclick="checkoutViaWhatsApp()">Place Order</button>
         </div>
     </div>
 
@@ -532,6 +556,16 @@
                 <p class="pv-desc">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
                 <div id="pv-button-container"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Custom Order Confirmation Modal -->
+    <div id="confirmation-modal">
+        <div class="confirm-content">
+            <h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px;">Thank You</h2>
+            <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 0 auto 24px auto;"></div>
+            <p style="font-size: 14px; color: var(--mid); margin-bottom: 40px; line-height: 1.8;">Your order has been successfully received. Our team will contact you shortly to confirm your delivery details.</p>
+            <button class="add-to-cart" style="background: var(--black); color: var(--white);" onclick="closeConfirmation()">Continue Shopping</button>
         </div>
     </div>
 
@@ -693,6 +727,10 @@
             modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
         }
 
+        function closeConfirmation() {
+            document.getElementById('confirmation-modal').style.display = 'none';
+        }
+
         function checkoutViaWhatsApp() {
             if (cart.length === 0) {
                 alert("Your cart is empty.");
@@ -708,6 +746,12 @@
                 alert("Please fill in your name, contact number, and delivery address.");
                 return;
             }
+
+            // Change button text to show it is processing
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const originalBtnText = checkoutBtn.innerText;
+            checkoutBtn.innerText = "Processing...";
+            checkoutBtn.disabled = true;
 
             let orderString = "";
             let total = 0;
@@ -730,11 +774,23 @@
                 mode: 'no-cors',
                 body: JSON.stringify(orderData)
             }).then(() => {
+                // Reset button
+                checkoutBtn.innerText = originalBtnText;
+                checkoutBtn.disabled = false;
+
                 if (WHATSAPP_NUMBER === "") {
-                    alert("Order successfully logged! We will contact you shortly to confirm.");
+                    // Show custom confirmation modal instead of standard alert
+                    document.getElementById('confirmation-modal').style.display = 'flex';
                     cart = []; 
                     updateCartUI();
-                    toggleCart();
+                    
+                    // Clear form fields
+                    document.getElementById('cust-name').value = '';
+                    document.getElementById('cust-phone').value = '';
+                    document.getElementById('cust-address').value = '';
+                    document.getElementById('gift-wrap').checked = false;
+
+                    toggleCart(); // Close the side cart
                 } else {
                     let message = `*New Order - Syed Fragrances*\n\n`;
                     message += `*Customer:* ${name}\n`;
@@ -752,6 +808,8 @@
                     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
                 }
             }).catch(error => {
+                checkoutBtn.innerText = originalBtnText;
+                checkoutBtn.disabled = false;
                 alert("There was an issue processing the order. Please try again.");
             });
         }

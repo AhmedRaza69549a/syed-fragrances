@@ -169,7 +169,6 @@
             padding: 20px 0;
         }
 
-        /* PREMIUM HOVER EFFECTS ADDED HERE */
         .product-card {
             background: var(--white);
             text-align: center;
@@ -474,6 +473,7 @@
             position: relative;
         }
 
+        /* ── FOOTER ── */
         footer {
             background: var(--black);
             color: var(--white);
@@ -482,6 +482,25 @@
             font-size: 11px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-link {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--gold);
         }
     </style>
 </head>
@@ -519,7 +538,12 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
+        <div class="footer-content">
+            <!-- PASTE YOUR INSTAGRAM LINK BELOW -->
+            <a href="https://www.instagram.com/fragrancesyed?igsh=emtsd2R3a3JpYmE=" target="_blank" class="social-link">INSTAGRAM</a>
+            
+            <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
+        </div>
     </footer>
 
     <!-- Cart Modal -->

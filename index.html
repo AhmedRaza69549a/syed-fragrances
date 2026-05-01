@@ -291,7 +291,7 @@
         .cart-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 24px;
             padding-bottom: 24px;
             border-bottom: 0.5px solid var(--border);
@@ -301,6 +301,20 @@
             font-family: var(--serif);
             font-size: 18px;
             margin-bottom: 4px;
+        }
+
+        .cart-qty-btn {
+            background: transparent;
+            border: none;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--black);
+            transition: background 0.2s;
+        }
+
+        .cart-qty-btn:hover {
+            background: #eaeaea;
         }
 
         .cart-footer {
@@ -620,6 +634,22 @@
             }
         }
 
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            updateCartUI();
+        }
+
         function updateCartUI() {
             const container = document.getElementById('cart-items-container');
             const countSpan = document.getElementById('cart-count');
@@ -634,9 +664,19 @@
                     <div class="cart-item">
                         <div>
                             <div class="cart-item-title">${item.name}</div>
-                            <p style="font-size: 11px; color: #888; letter-spacing: 0.1em; text-transform: uppercase;">${item.size} | Qty: ${item.quantity}</p>
+                            <div style="font-size: 11px; color: #888; letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                                <span>${item.size}</span>
+                                <div style="display: flex; align-items: center; border: 0.5px solid var(--border); border-radius: 3px; overflow: hidden;">
+                                    <button onclick="updateQuantity(${item.id}, -1)" class="cart-qty-btn">−</button>
+                                    <span style="font-size: 12px; font-weight: 500; color: var(--black); min-width: 16px; text-align: center;">${item.quantity}</span>
+                                    <button onclick="updateQuantity(${item.id}, 1)" class="cart-qty-btn">+</button>
+                                </div>
+                            </div>
                         </div>
-                        <p style="font-size: 14px;">Rs. ${(item.price * item.quantity).toLocaleString()}</p>
+                        <div style="text-align: right;">
+                            <p style="font-size: 14px; margin-bottom: 8px;">Rs. ${(item.price * item.quantity).toLocaleString()}</p>
+                            <button onclick="removeFromCart(${item.id})" style="background: none; border: none; color: #999; font-size: 9px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: underline;">Remove</button>
+                        </div>
                     </div>
                 `;
             }).join('');

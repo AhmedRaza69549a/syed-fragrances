@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYED FRAGRANCES</title>
+    <title>SYED FRAGRANCES — Haute Parfumerie</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,6 +179,7 @@
             background: #F2EFE8;
         }
 
+        /* Added cursor pointer to indicate it's clickable */
         .product-placeholder {
             width: 100%;
             aspect-ratio: 3/4;
@@ -191,6 +192,16 @@
             font-size: 10px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
+            cursor: pointer; 
+            overflow: hidden;
+        }
+
+        .product-placeholder img {
+            transition: transform 0.5s ease;
+        }
+
+        .product-placeholder:hover img {
+            transform: scale(1.05);
         }
 
         .product-size {
@@ -201,12 +212,14 @@
             margin-bottom: 8px;
         }
 
+        /* Added cursor pointer */
         .product-title {
             font-family: var(--serif);
             font-size: 22px;
             font-weight: 400;
             margin-bottom: 8px;
             line-height: 1.3;
+            cursor: pointer;
         }
 
         .product-price {
@@ -235,6 +248,7 @@
             color: var(--white);
         }
 
+        /* ── CART MODAL ── */
         #cart-modal {
             display: none;
             position: fixed;
@@ -262,7 +276,7 @@
             font-weight: 300;
         }
 
-        .close-cart {
+        .close-btn {
             cursor: pointer;
             font-size: 32px;
             font-weight: 300;
@@ -332,6 +346,75 @@
             background: #333;
         }
 
+        /* ── PRODUCT VIEW MODAL (QUICK VIEW) ── */
+        #product-view-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .pv-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .pv-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            font-size: 32px;
+            background: none; border: none;
+            color: var(--black);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .pv-image-container {
+            flex: 1 1 300px;
+            background: #0d0d0d;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--mid);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .pv-details {
+            flex: 1 1 300px;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .pv-details h2 {
+            font-family: var(--serif);
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .pv-desc {
+            font-size: 14px;
+            color: var(--mid);
+            margin-bottom: 30px;
+        }
+
         footer {
             background: var(--black);
             color: var(--white);
@@ -372,17 +455,19 @@
             <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 24px auto;"></div>
         </div>
         <div class="grid" id="product-grid">
-            </div>
+            <!-- Products injected by JavaScript -->
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
     </footer>
 
+    <!-- Cart Modal -->
     <div id="cart-modal">
         <div class="cart-header">
             <h2>Your Cart</h2>
-            <button class="close-cart" onclick="toggleCart()">×</button>
+            <button class="close-btn" onclick="toggleCart()">×</button>
         </div>
         <div class="cart-items" id="cart-items-container"></div>
         <div class="cart-footer">
@@ -400,9 +485,26 @@
         </div>
     </div>
 
+    <!-- Product Quick View Modal -->
+    <div id="product-view-modal">
+        <div class="pv-content">
+            <button class="pv-close" onclick="closeProductView()">×</button>
+            <div class="pv-image-container" id="pv-image">
+                <!-- Image goes here -->
+            </div>
+            <div class="pv-details">
+                <p class="product-size" id="pv-size">50 ML</p>
+                <h2 id="pv-title">Product Name</h2>
+                <p class="product-price" id="pv-price" style="font-size: 16px; margin-bottom: 16px;">Rs. 0</p>
+                <p class="pv-desc">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
+                <div id="pv-button-container"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const WHATSAPP_NUMBER = ""; 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxy5H5Pf2KsDuNq2kf6YfcO_WEiICg-4wYvNAQJPpY5kp-KtfPV6wDIr4vseAj-CBvG/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
 
         const products = [
             { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png" },
@@ -426,7 +528,7 @@
             { id: 19, name: "Impression of One Million", price: 2500, size: "50 ml", image: "One Million.png" },
             { id: 20, name: "Impression of Versace Bright Crystal", price: 2500, size: "50 ml", image: "Versace Bright Crystal.png" },
             { id: 21, name: "Impression of Gucci Flora", price: 2500, size: "50 ml", image: "Gucci Flora.png" },
-            { id: 22, name: "Impression of Janan Sports", price: 2500, size: "50 ml", image: "Janan Sports.png" },
+            { id: 22, name: "Impression of Janan Sports", price: 2500, size: "50 ml", image: "Janan Sports.png" }
         ];
 
         let cart = [];
@@ -440,16 +542,46 @@
 
                 return `
                 <div class="product-card">
-                    <div class="product-placeholder" ${product.image ? 'style="padding: 0; background: transparent;"' : ''}>
+                    <div class="product-placeholder" onclick="openProductView(${product.id})" ${product.image ? 'style="padding: 0; background: transparent;"' : ''}>
                         ${imageHtml}
                     </div>
                     <p class="product-size">${product.size}</p>
-                    <h3 class="product-title">${product.name}</h3>
+                    <h3 class="product-title" onclick="openProductView(${product.id})">${product.name}</h3>
                     <p class="product-price">Rs. ${product.price.toLocaleString()}</p>
                     <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
                 </div>
                 `;
             }).join('');
+        }
+
+        function openProductView(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            let imageHtml = product.image 
+                ? `<img src="${product.image}" style="width: 100%; height: 100%; object-fit: cover;">`
+                : `Image Space`;
+            
+            document.getElementById('pv-image').innerHTML = imageHtml;
+            document.getElementById('pv-image').style.background = product.image ? 'transparent' : '#0d0d0d';
+            
+            document.getElementById('pv-title').innerText = product.name;
+            document.getElementById('pv-price').innerText = `Rs. ${product.price.toLocaleString()}`;
+            document.getElementById('pv-size').innerText = product.size;
+            
+            document.getElementById('pv-button-container').innerHTML = `
+                <button class="add-to-cart" style="background: var(--black); color: var(--white);" onclick="addToCartAndClose(${product.id})">Add to Cart - Rs. ${product.price.toLocaleString()}</button>
+            `;
+
+            document.getElementById('product-view-modal').style.display = 'flex';
+        }
+
+        function closeProductView() {
+            document.getElementById('product-view-modal').style.display = 'none';
+        }
+
+        function addToCartAndClose(productId) {
+            addToCart(productId);
+            closeProductView();
         }
 
         function addToCart(productId) {

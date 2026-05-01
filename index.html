@@ -166,17 +166,23 @@
             gap: 2px;
             background: var(--border);
             border: 0.5px solid var(--border);
+            padding: 20px 0;
         }
 
+        /* PREMIUM HOVER EFFECTS ADDED HERE */
         .product-card {
             background: var(--white);
             text-align: center;
             padding: 40px;
-            transition: background 0.3s ease;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .product-card:hover {
-            background: #F2EFE8;
+            background: #ffffff;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+            z-index: 2;
         }
 
         .product-placeholder {
@@ -196,11 +202,11 @@
         }
 
         .product-placeholder img {
-            transition: transform 0.5s ease;
+            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .product-placeholder:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .product-size {
@@ -238,7 +244,7 @@
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .add-to-cart:hover {
@@ -419,6 +425,7 @@
             font-size: 10px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
+            overflow: hidden;
         }
 
         .pv-details {
@@ -747,7 +754,6 @@
                 return;
             }
 
-            // Change button text to show it is processing
             const checkoutBtn = document.getElementById('checkout-btn');
             const originalBtnText = checkoutBtn.innerText;
             checkoutBtn.innerText = "Processing...";
@@ -774,23 +780,20 @@
                 mode: 'no-cors',
                 body: JSON.stringify(orderData)
             }).then(() => {
-                // Reset button
                 checkoutBtn.innerText = originalBtnText;
                 checkoutBtn.disabled = false;
 
                 if (WHATSAPP_NUMBER === "") {
-                    // Show custom confirmation modal instead of standard alert
                     document.getElementById('confirmation-modal').style.display = 'flex';
                     cart = []; 
                     updateCartUI();
                     
-                    // Clear form fields
                     document.getElementById('cust-name').value = '';
                     document.getElementById('cust-phone').value = '';
                     document.getElementById('cust-address').value = '';
                     document.getElementById('gift-wrap').checked = false;
 
-                    toggleCart(); // Close the side cart
+                    toggleCart(); 
                 } else {
                     let message = `*New Order - Syed Fragrances*\n\n`;
                     message += `*Customer:* ${name}\n`;

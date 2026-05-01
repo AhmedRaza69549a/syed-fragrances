@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYED FRAGRANCES</title>
+    <title>SYED FRAGRANCES — Haute Parfumerie</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,7 +179,6 @@
             background: #F2EFE8;
         }
 
-        /* Added cursor pointer to indicate it's clickable */
         .product-placeholder {
             width: 100%;
             aspect-ratio: 3/4;
@@ -212,7 +211,6 @@
             margin-bottom: 8px;
         }
 
-        /* Added cursor pointer */
         .product-title {
             font-family: var(--serif);
             font-size: 22px;
@@ -311,7 +309,8 @@
             border-top: 0.5px solid var(--border);
         }
 
-        .checkout-form input {
+        .checkout-form input[type="text"],
+        .checkout-form input[type="tel"] {
             width: 100%;
             padding: 16px;
             margin-bottom: 12px;
@@ -325,6 +324,21 @@
         
         .checkout-form input:focus {
             border-color: var(--black);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            font-family: var(--sans);
+            font-size: 13px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+            width: auto;
+            cursor: pointer;
         }
 
         .whatsapp-checkout {
@@ -478,7 +492,12 @@
             
             <div class="checkout-form">
                 <input type="text" id="cust-name" placeholder="Full Name" required>
+                <input type="tel" id="cust-phone" placeholder="Contact Number" required>
                 <input type="text" id="cust-address" placeholder="Delivery Address" required>
+                
+                <label class="checkbox-container">
+                    <input type="checkbox" id="gift-wrap"> Add Premium Gift Wrap
+                </label>
             </div>
 
             <button class="whatsapp-checkout" onclick="checkoutViaWhatsApp()">Place Order</button>
@@ -641,10 +660,12 @@
             }
 
             const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
             const address = document.getElementById('cust-address').value.trim();
+            const isGiftWrap = document.getElementById('gift-wrap').checked;
 
-            if (!name || !address) {
-                alert("Please enter your name and delivery address.");
+            if (!name || !phone || !address) {
+                alert("Please fill in your name, contact number, and delivery address.");
                 return;
             }
 
@@ -657,9 +678,11 @@
 
             const orderData = {
                 name: name,
+                phone: phone,
                 address: address,
                 orderDetails: orderString,
-                total: total
+                total: total,
+                giftWrap: isGiftWrap ? "Yes" : "No"
             };
 
             fetch(SCRIPT_URL, {
@@ -675,9 +698,13 @@
                 } else {
                     let message = `*New Order - Syed Fragrances*\n\n`;
                     message += `*Customer:* ${name}\n`;
+                    message += `*Phone:* ${phone}\n`;
                     message += `*Address:* ${address}\n\n`;
                     message += `*Order Details:*\n`;
                     message += orderString;
+                    if (isGiftWrap) {
+                        message += `\n*Extras:* Premium Gift Wrap Requested 🎁\n`;
+                    }
                     message += `\n*Total Due: Rs. ${total.toLocaleString()}*\n\n`;
                     message += `Please confirm delivery details and payment method.`;
 

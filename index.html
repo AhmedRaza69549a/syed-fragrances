@@ -674,9 +674,10 @@
         </div>
     </div>
 
-    <!-- Product Quick View Modal -->
-    <div id="product-view-modal">
-        <div class="pv-content">
+    <!-- Product Quick View Modal WITH NEW CLICK OUTSIDE TO CLOSE -->
+    <div id="product-view-modal" onclick="closeProductView()">
+        <!-- Added event.stopPropagation() so clicking inside the white box doesn't close it -->
+        <div class="pv-content" onclick="event.stopPropagation()">
             <button class="pv-close" onclick="closeProductView()">×</button>
             <div class="pv-image-container" id="pv-image">
                 <!-- Image goes here -->

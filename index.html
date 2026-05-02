@@ -73,9 +73,9 @@
             background-color: var(--gold);
         }
 
-        /* ── SIDE NAVIGATION DRAWER ── */
+        /* ── SIDE NAVIGATION DRAWER (SLIDE ANIMATION) ── */
         #nav-drawer {
-            display: none;
+            display: flex; /* Changed from none to flex */
             position: fixed;
             top: 0; left: 0;
             width: 100%; max-width: 350px;
@@ -85,6 +85,15 @@
             box-shadow: 10px 0 30px rgba(0,0,0,0.05);
             z-index: 2000;
             flex-direction: column;
+            
+            /* Animation Setup */
+            transform: translateX(-100%); /* Start hidden off-screen to the left */
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smooth slide */
+        }
+
+        /* Class added via JS to slide it in */
+        #nav-drawer.active {
+            transform: translateX(0);
         }
 
         .nav-drawer-links {
@@ -314,9 +323,9 @@
             color: var(--white);
         }
 
-        /* ── CART MODAL ── */
+        /* ── CART MODAL (SLIDE ANIMATION ADDED HERE TOO) ── */
         #cart-modal {
-            display: none;
+            display: flex; /* Changed from none to flex */
             position: fixed;
             top: 0; right: 0;
             width: 100%; max-width: 450px;
@@ -326,6 +335,15 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.05);
             z-index: 1000;
             flex-direction: column;
+
+            /* Animation Setup */
+            transform: translateX(100%); /* Start hidden off-screen to the right */
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smooth slide */
+        }
+
+        /* Class added via JS to slide it in */
+        #cart-modal.active {
+            transform: translateX(0);
         }
 
         .cart-header {
@@ -848,15 +866,16 @@
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
         }
 
-        function toggleCart() {
-            const modal = document.getElementById('cart-modal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        // NEW: Function to open/close the navigation drawer
+        // NEW: Toggle Navigation Drawer using the active class
         function toggleNav() {
             const nav = document.getElementById('nav-drawer');
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            nav.classList.toggle('active');
+        }
+
+        // NEW: Toggle Cart using the active class
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('active');
         }
 
         function closeConfirmation() {

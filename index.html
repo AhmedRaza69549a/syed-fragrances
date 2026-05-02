@@ -48,7 +48,6 @@
             z-index: 100;
         }
 
-        /* ── HAMBURGER MENU ICON ── */
         .hamburger-btn {
             background: none;
             border: none;
@@ -73,9 +72,8 @@
             background-color: var(--gold);
         }
 
-        /* ── SIDE NAVIGATION DRAWER (SLIDE ANIMATION) ── */
         #nav-drawer {
-            display: flex; /* Changed from none to flex */
+            display: flex; 
             position: fixed;
             top: 0; left: 0;
             width: 100%; max-width: 350px;
@@ -85,13 +83,10 @@
             box-shadow: 10px 0 30px rgba(0,0,0,0.05);
             z-index: 2000;
             flex-direction: column;
-            
-            /* Animation Setup */
-            transform: translateX(-100%); /* Start hidden off-screen to the left */
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smooth slide */
+            transform: translateX(-100%); 
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
 
-        /* Class added via JS to slide it in */
         #nav-drawer.active {
             transform: translateX(0);
         }
@@ -323,9 +318,8 @@
             color: var(--white);
         }
 
-        /* ── CART MODAL (SLIDE ANIMATION ADDED HERE TOO) ── */
         #cart-modal {
-            display: flex; /* Changed from none to flex */
+            display: flex; 
             position: fixed;
             top: 0; right: 0;
             width: 100%; max-width: 450px;
@@ -335,13 +329,10 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.05);
             z-index: 1000;
             flex-direction: column;
-
-            /* Animation Setup */
-            transform: translateX(100%); /* Start hidden off-screen to the right */
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smooth slide */
+            transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
 
-        /* Class added via JS to slide it in */
         #cart-modal.active {
             transform: translateX(0);
         }
@@ -460,7 +451,6 @@
             background: #333;
         }
 
-        /* ── PRODUCT VIEW MODAL (QUICK VIEW) ── */
         #product-view-modal {
             display: none;
             position: fixed;
@@ -530,7 +520,6 @@
             margin-bottom: 30px;
         }
 
-        /* ── ORDER CONFIRMATION MODAL ── */
         #confirmation-modal {
             display: none;
             position: fixed;
@@ -554,7 +543,6 @@
             position: relative;
         }
 
-        /* ── FOOTER ── */
         footer {
             background: var(--black);
             color: var(--white);
@@ -584,7 +572,6 @@
             color: var(--gold);
         }
 
-        /* Mobile adjustments for the header logo */
         @media (max-width: 768px) {
             .logo-container img {
                 height: 120px; 
@@ -594,7 +581,6 @@
 </head>
 <body>
 
-    <!-- ── NAVIGATION DRAWER ── -->
     <div id="nav-drawer">
         <div class="cart-header">
             <h2>Menu</h2>
@@ -602,14 +588,13 @@
         </div>
         <div class="nav-drawer-links">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="shop.html" class="nav-link">Shop</a>
+            <a href="index.html" class="nav-link">Shop</a>
             <a href="about.html" class="nav-link">About</a>
         </div>
     </div>
 
     <header>
         <div class="header-left">
-            <!-- ── HAMBURGER BUTTON ── -->
             <button class="hamburger-btn" onclick="toggleNav()">
                 <span></span>
                 <span></span>
@@ -647,8 +632,7 @@
 
     <footer>
         <div class="footer-content">
-            <!-- PASTE YOUR INSTAGRAM LINK BELOW -->
-            <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" class="social-link">INSTAGRAM</a>
+            <a href="https://www.instagram.com/fragrancesyed" target="_blank" class="social-link">INSTAGRAM</a>
             <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
         </div>
     </footer>
@@ -691,7 +675,7 @@
                 <p class="product-size" id="pv-size">50 ML</p>
                 <h2 id="pv-title">Product Name</h2>
                 <p class="product-price" id="pv-price" style="font-size: 16px; margin-bottom: 16px;">Rs. 0</p>
-                <p class="pv-desc">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
+                <p class="pv-desc" id="pv-desc-text">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
                 <div id="pv-button-container"></div>
             </div>
         </div>
@@ -709,12 +693,14 @@
 
     <script>
         const WHATSAPP_NUMBER = ""; 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
 
+        // I have added unique descriptions for the first three products.
+        // You can copy this format to write descriptions for the rest!
         const products = [
-            { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png" },
-            { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml", image: "gucci bloom.png" },
-            { id: 3, name: "Impression of Erba Pura", price: 2500, size: "50 ml", image: "erba pura.png" },
+            { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png", description: "A fresh, energetic blend perfect for daily wear. Bright citrus notes open into a clean, floral heart." },
+            { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml", image: "gucci bloom.png", description: "A rich white floral scent capturing the spirit of a thriving garden. Heavy with tuberose and jasmine." },
+            { id: 3, name: "Impression of Erba Pura", price: 2500, size: "50 ml", image: "erba pura.png", description: "A modern mix of Mediterranean citrus and sweet fruits over a warm, amber vanilla base." },
             { id: 4, name: "Impression of Sabaya", price: 2500, size: "50 ml", image: "sabaya.png" },
             { id: 5, name: "Impression of SRK", price: 2500, size: "50 ml", image: "srk.png" },
             { id: 6, name: "Impression of Azzaro Wanted", price: 2500, size: "50 ml", image: "azzaro wanted.png" },
@@ -734,7 +720,7 @@
             { id: 20, name: "Impression of Versace Bright Crystal", price: 2500, size: "50 ml", image: "Versace Bright Crystal.png" },
             { id: 21, name: "Impression of Gucci Flora", price: 2500, size: "50 ml", image: "Gucci Flora.png" },
             { id: 22, name: "Impression of Janan Sports", price: 2000, size: "50 ml", image: "Janan Sports.png" },
-            { id: 23, name: "Impression of Office For Men", price: 2500, size: "50 ml", image: "Office For Men.png" },
+            { id: 23, name: "Impression of Office For Men", price: 2500, size: "50 ml", image: "Office For Men.png" }
         ];
 
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
@@ -777,6 +763,10 @@
             document.getElementById('pv-price').innerText = `Rs. ${product.price.toLocaleString()}`;
             document.getElementById('pv-size').innerText = product.size;
             
+            // Check if the product has a unique description, otherwise use the default
+            const defaultDesc = "A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.";
+            document.getElementById('pv-desc-text').innerText = product.description ? product.description : defaultDesc;
+            
             document.getElementById('pv-button-container').innerHTML = `
                 <button class="add-to-cart" style="background: var(--black); color: var(--white);" onclick="addToCartAndClose(${product.id})">Add to Cart - Rs. ${product.price.toLocaleString()}</button>
             `;
@@ -805,7 +795,7 @@
             updateCartUI();
             
             const modal = document.getElementById('cart-modal');
-            if(modal.style.display !== 'flex') {
+            if(!modal.classList.contains('active')) {
                 toggleCart();
             }
         }
@@ -866,16 +856,14 @@
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
         }
 
-        // NEW: Toggle Navigation Drawer using the active class
-        function toggleNav() {
-            const nav = document.getElementById('nav-drawer');
-            nav.classList.toggle('active');
-        }
-
-        // NEW: Toggle Cart using the active class
         function toggleCart() {
             const modal = document.getElementById('cart-modal');
             modal.classList.toggle('active');
+        }
+
+        function toggleNav() {
+            const nav = document.getElementById('nav-drawer');
+            nav.classList.toggle('active');
         }
 
         function closeConfirmation() {

@@ -82,6 +82,19 @@
             background-color: var(--gold);
         }
 
+        /* Animated X lines */
+        .hamburger-btn.open span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .hamburger-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-btn.open span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
         #nav-drawer {
             display: flex; 
             position: fixed;
@@ -674,9 +687,8 @@
         </div>
     </div>
 
-    <!-- Product Quick View Modal WITH NEW CLICK OUTSIDE TO CLOSE -->
+    <!-- Product Quick View Modal -->
     <div id="product-view-modal" onclick="closeProductView()">
-        <!-- Added event.stopPropagation() so clicking inside the white box doesn't close it -->
         <div class="pv-content" onclick="event.stopPropagation()">
             <button class="pv-close" onclick="closeProductView()">×</button>
             <div class="pv-image-container" id="pv-image">
@@ -958,6 +970,24 @@
                 alert("There was an issue processing the order. Please try again.");
             });
         }
+
+        // NEW: Smart listener to close sliding menus when clicking completely outside of them
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('nav-drawer');
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const cartModal = document.getElementById('cart-modal');
+            const cartBtn = document.querySelector('.cart-btn');
+
+            // Close Navigation Drawer
+            if (nav.classList.contains('active') && !nav.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+                toggleNav();
+            }
+
+            // Close Cart Drawer (ignores clicks on "Add to Cart" buttons to prevent immediate closing)
+            if (cartModal.classList.contains('active') && !cartModal.contains(event.target) && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
+                toggleCart();
+            }
+        });
 
         renderProducts();
         updateCartUI(); 

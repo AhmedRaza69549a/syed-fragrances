@@ -9,6 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- OPEN GRAPH TAGS (FOR WHATSAPP/INSTA LINK PREVIEWS) -->
+    <meta property="og:title" content="SYED FRAGRANCES — Haute Parfumerie">
+    <meta property="og:description" content="The art of invisible presence. Crafted with uncompromising standards and the rarest raw materials.">
+    <meta property="og:image" content="https://ahmedraza69549a.github.io/logo.png">
+    <meta property="og:url" content="https://ahmedraza69549a.github.io/">
+    <meta property="og:type" content="website">
+
     <style>
         :root {
             --black: #0a0a0a;
@@ -588,7 +598,7 @@
         </div>
         <div class="nav-drawer-links">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="index.html" class="nav-link">Shop</a>
+            <a href="shop.html" class="nav-link">Shop</a>
             <a href="about.html" class="nav-link">About</a>
         </div>
     </div>
@@ -695,8 +705,6 @@
         const WHATSAPP_NUMBER = ""; 
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
 
-        // I have added unique descriptions for the first three products.
-        // You can copy this format to write descriptions for the rest!
         const products = [
             { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png", description: "A fresh, energetic blend perfect for daily wear. Bright citrus notes open into a clean, floral heart." },
             { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml", image: "gucci bloom.png", description: "A rich white floral scent capturing the spirit of a thriving garden. Heavy with tuberose and jasmine." },
@@ -763,7 +771,6 @@
             document.getElementById('pv-price').innerText = `Rs. ${product.price.toLocaleString()}`;
             document.getElementById('pv-size').innerText = product.size;
             
-            // Check if the product has a unique description, otherwise use the default
             const defaultDesc = "A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.";
             document.getElementById('pv-desc-text').innerText = product.description ? product.description : defaultDesc;
             

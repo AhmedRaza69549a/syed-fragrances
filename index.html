@@ -48,14 +48,58 @@
             z-index: 100;
         }
 
-        /* ── NAVIGATION MENU ── */
+        /* ── HAMBURGER MENU ICON ── */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 5px;
+            width: max-content;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: var(--black);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover span {
+            background-color: var(--gold);
+        }
+
+        /* ── SIDE NAVIGATION DRAWER ── */
+        #nav-drawer {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; max-width: 350px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 0.5px solid var(--border);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.05);
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .nav-drawer-links {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
         .nav-link {
             color: var(--black);
             text-decoration: none;
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-right: 24px;
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 300;
             transition: color 0.3s;
         }
 
@@ -406,7 +450,7 @@
             width: 100%; height: 100vh;
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(5px);
-            z-index: 2000;
+            z-index: 3000;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -476,7 +520,7 @@
             width: 100%; height: 100vh;
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(5px);
-            z-index: 3000;
+            z-index: 4000;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -521,17 +565,38 @@
         .social-link:hover {
             color: var(--gold);
         }
+
+        /* Mobile adjustments for the header logo */
+        @media (max-width: 768px) {
+            .logo-container img {
+                height: 120px; 
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- ── NAVIGATION DRAWER ── -->
+    <div id="nav-drawer">
+        <div class="cart-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="toggleNav()">×</button>
+        </div>
+        <div class="nav-drawer-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+    </div>
+
     <header>
         <div class="header-left">
-            <nav>
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="shop.html" class="nav-link">Shop</a>
-                <a href="about.html" class="nav-link">About</a>
-            </nav>
+            <!-- ── HAMBURGER BUTTON ── -->
+            <button class="hamburger-btn" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
         <a href="index.html" class="logo-container">
             <img src="logo.png" alt="Syed Fragrances Logo"> 
@@ -654,12 +719,11 @@
             { id: 23, name: "Impression of Office For Men", price: 2500, size: "50 ml", image: "Office For Men.png" },
         ];
 
-        // NEW: Pull cart data from LocalStorage, or start empty
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
-            if(!grid) return; // Only run if the grid exists on the current page
+            if(!grid) return; 
             
             grid.innerHTML = products.map(product => {
                 let imageHtml = product.image 
@@ -745,7 +809,6 @@
         }
 
         function updateCartUI() {
-            // NEW: Save the cart to the browser's memory every time it changes
             localStorage.setItem('syedCart', JSON.stringify(cart));
             
             const container = document.getElementById('cart-items-container');
@@ -788,6 +851,12 @@
         function toggleCart() {
             const modal = document.getElementById('cart-modal');
             modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // NEW: Function to open/close the navigation drawer
+        function toggleNav() {
+            const nav = document.getElementById('nav-drawer');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
         }
 
         function closeConfirmation() {
@@ -842,7 +911,7 @@
                 if (WHATSAPP_NUMBER === "") {
                     document.getElementById('confirmation-modal').style.display = 'flex';
                     cart = []; 
-                    updateCartUI(); // This will also clear LocalStorage
+                    updateCartUI(); 
                     
                     document.getElementById('cust-name').value = '';
                     document.getElementById('cust-phone').value = '';
@@ -873,9 +942,8 @@
             });
         }
 
-        // Initialize the page
         renderProducts();
-        updateCartUI(); // Call this immediately so the cart icon shows the right number on load
+        updateCartUI(); 
     </script>
 </body>
 </html>

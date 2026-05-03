@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYED FRAGRANCES — Haute Parfumerie</title>
+    <title>Shop — SYED FRAGRANCES</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- OPEN GRAPH TAGS (FOR WHATSAPP/INSTA LINK PREVIEWS) -->
+    <meta property="og:title" content="SYED FRAGRANCES">
+    <meta property="og:description" content="The art of invisible presence. Crafted with uncompromising standards and the rarest raw materials.">
+    <meta property="og:image" content="https://ahmedraza69549a.github.io/logo.png">
+    <meta property="og:url" content="https://ahmedraza69549a.github.io/">
+    <meta property="og:type" content="website">
+
     <style>
         :root {
             --black: #0a0a0a;
@@ -48,14 +58,75 @@
             z-index: 100;
         }
 
-        /* ── NAVIGATION MENU ── */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 5px;
+            width: max-content;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: var(--black);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover span {
+            background-color: var(--gold);
+        }
+
+        /* Animated X lines */
+        .hamburger-btn.open span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .hamburger-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-btn.open span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        #nav-drawer {
+            display: flex; 
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; max-width: 350px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 0.5px solid var(--border);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.05);
+            z-index: 2000;
+            flex-direction: column;
+            transform: translateX(-100%); 
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+
+        #nav-drawer.active {
+            transform: translateX(0);
+        }
+
+        .nav-drawer-links {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
         .nav-link {
             color: var(--black);
             text-decoration: none;
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-right: 24px;
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 300;
             transition: color 0.3s;
         }
 
@@ -97,70 +168,12 @@
             color: var(--white);
         }
 
-        .hero {
-            height: 85vh;
-            background-color: var(--black);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 5%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.4;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            color: #ffffff;
-        }
-
-        .hero-label {
-            font-size: 10px;
-            letter-spacing: 0.35em;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-family: var(--serif);
-            font-size: clamp(48px, 6vw, 80px);
-            font-weight: 300;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -0.01em;
-            color: #ffffff;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--gold);
-        }
-
-        .hero p {
-            font-size: 14px;
-            color: #dddddd;
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 2;
-            letter-spacing: 0.05em;
-        }
-
         .collection-section {
             padding: 100px 5%;
             max-width: 1400px;
             margin: 0 auto;
+            /* Ensures footer stays at bottom if grid is small */
+            min-height: 80vh; 
         }
 
         .section-header {
@@ -272,7 +285,7 @@
 
         /* ── CART MODAL ── */
         #cart-modal {
-            display: none;
+            display: flex; 
             position: fixed;
             top: 0; right: 0;
             width: 100%; max-width: 450px;
@@ -282,6 +295,12 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.05);
             z-index: 1000;
             flex-direction: column;
+            transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+
+        #cart-modal.active {
+            transform: translateX(0);
         }
 
         .cart-header {
@@ -406,7 +425,7 @@
             width: 100%; height: 100vh;
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(5px);
-            z-index: 2000;
+            z-index: 3000;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -476,7 +495,7 @@
             width: 100%; height: 100vh;
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(5px);
-            z-index: 3000;
+            z-index: 4000;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -492,7 +511,6 @@
             position: relative;
         }
 
-        /* ── FOOTER ── */
         footer {
             background: var(--black);
             color: var(--white);
@@ -521,17 +539,35 @@
         .social-link:hover {
             color: var(--gold);
         }
+
+        @media (max-width: 768px) {
+            .logo-container img {
+                height: 120px; 
+            }
+        }
     </style>
 </head>
 <body>
 
+    <div id="nav-drawer">
+        <div class="cart-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="toggleNav()">×</button>
+        </div>
+        <div class="nav-drawer-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+    </div>
+
     <header>
         <div class="header-left">
-            <nav>
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="shop.html" class="nav-link">Shop</a>
-                <a href="about.html" class="nav-link">About</a>
-            </nav>
+            <button class="hamburger-btn" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
         <a href="index.html" class="logo-container">
             <img src="logo.png" alt="Syed Fragrances Logo"> 
@@ -540,7 +576,7 @@
             <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
         </div>
     </header>
-  
+
     <main class="collection-section">
         <div class="section-header">
             <h2 class="section-title">The Collection</h2>
@@ -553,7 +589,6 @@
 
     <footer>
         <div class="footer-content">
-            <!-- PASTE YOUR INSTAGRAM LINK BELOW -->
             <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" class="social-link">INSTAGRAM</a>
             <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
         </div>
@@ -586,9 +621,9 @@
         </div>
     </div>
 
-    <!-- Product Quick View Modal -->
-    <div id="product-view-modal">
-        <div class="pv-content">
+    <!-- Product Quick View Modal WITH NEW CLICK OUTSIDE TO CLOSE -->
+    <div id="product-view-modal" onclick="closeProductView()">
+        <div class="pv-content" onclick="event.stopPropagation()">
             <button class="pv-close" onclick="closeProductView()">×</button>
             <div class="pv-image-container" id="pv-image">
                 <!-- Image goes here -->
@@ -597,7 +632,7 @@
                 <p class="product-size" id="pv-size">50 ML</p>
                 <h2 id="pv-title">Product Name</h2>
                 <p class="product-price" id="pv-price" style="font-size: 16px; margin-bottom: 16px;">Rs. 0</p>
-                <p class="pv-desc">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
+                <p class="pv-desc" id="pv-desc-text">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
                 <div id="pv-button-container"></div>
             </div>
         </div>
@@ -618,37 +653,37 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
 
         const products = [
-            { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png" },
-            { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml", image: "gucci bloom.png" },
-            { id: 3, name: "Impression of Erba Pura", price: 2500, size: "50 ml", image: "erba pura.png" },
-            { id: 4, name: "Impression of Sabaya", price: 2500, size: "50 ml", image: "sabaya.png" },
-            { id: 5, name: "Impression of SRK", price: 2500, size: "50 ml", image: "srk.png" },
-            { id: 6, name: "Impression of Azzaro Wanted", price: 2500, size: "50 ml", image: "azzaro wanted.png" },
-            { id: 7, name: "Impression of Cool Water", price: 2500, size: "50 ml", image: "cool water.png" },
-            { id: 8, name: "Impression of Isse Miyake", price: 2500, size: "50 ml", image: "isse miyake.png" },
-            { id: 9, name: "Impression of Azzaro Chrome", price: 2500, size: "50 ml", image: "azzaro chrome.png" },
-            { id: 10, name: "Impression of Black Orchid Tomford", price: 2500, size: "50 ml", image: "Black Orchid Tomford.png" },
-            { id: 11, name: "Impression of Bombshell", price: 2500, size: "50 ml", image: "Bombshell.png" },
-            { id: 12, name: "Impression of Hugo boss", price: 2500, size: "50 ml", image: "Hugo Boss.png" },
-            { id: 13, name: "Impression of Creed Aventus", price: 2500, size: "50 ml", image: "Creed Aventus.png" },
-            { id: 14, name: "Impression of Zarar", price: 1800, size: "50 ml", image: "Zarar.png" },
-            { id: 15, name: "Impression of David Beckham", price: 2500, size: "50 ml", image: "David Beckham.png" },
-            { id: 16, name: "Impression of Uroosa", price: 2000, size: "50 ml", image: "Uroosa.png" },
-            { id: 17, name: "Impression of 502", price: 2500, size: "50 ml", image: "502.png" },
-            { id: 18, name: "Impression of Chanel", price: 2500, size: "50 ml", image: "chanel.png" },
-            { id: 19, name: "Impression of One Million", price: 2500, size: "50 ml", image: "One Million.png" },
-            { id: 20, name: "Impression of Versace Bright Crystal", price: 2500, size: "50 ml", image: "Versace Bright Crystal.png" },
-            { id: 21, name: "Impression of Gucci Flora", price: 2500, size: "50 ml", image: "Gucci Flora.png" },
-            { id: 22, name: "Impression of Janan Sports", price: 2000, size: "50 ml", image: "Janan Sports.png" },
-            { id: 23, name: "Impression of Office For Men", price: 2500, size: "50 ml", image: "Office For Men.png" },
+            { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png", description: "A quiet embrace of warm amber and milky woods that melts into the skin. It is the scent of unspoken confidence, resting softly yet leaving a profound memory." },
+            { id: 2, name: "Impression of Gucci Bloom", price: 2500, size: "50 ml", image: "gucci bloom.png", description: "Step into a wildly overgrown garden of white florals, thick with tuberose and midnight jasmine. It captures the raw, untamed elegance of nature in full bloom." },
+            { id: 3, name: "Impression of Erba Pura", price: 2500, size: "50 ml", image: "erba pura.png", description: "A golden cascade of Mediterranean fruits wrapped in a deeply sensual musk. It radiates pure joy and uninhibited luxury, commanding the room with a warmly magnetic aura." },
+            { id: 4, name: "Impression of Sabaya", price: 2500, size: "50 ml", image: "sabaya.png", description: "A delicate awakening of fresh roses and bright morning citrus. It carries a serene, joyful elegance that floats effortlessly through the air." },
+            { id: 5, name: "Impression of SRK", price: 2500, size: "50 ml", image: "srk.png", description: "A deeply charismatic blend of warm woods and magnetic spice, crafted for the man who commands attention without speaking. It leaves a lingering trail of pure, unapologetic charm." },
+            { id: 6, name: "Impression of Azzaro Wanted", price: 2500, size: "50 ml", image: "azzaro wanted.png", description: "Daring notes of crisp lemon clash with warm cardamom in a brazen display of rebellion. It is a dangerously appealing signature for those who write their own rules." },
+            { id: 7, name: "Impression of Cool Water", price: 2500, size: "50 ml", image: "cool water.png", description: "The raw, crashing power of the midnight ocean bottled with icy mint and cedar. It washes over the senses with a clean, formidable surge of aquatic energy." },
+            { id: 8, name: "Impression of Isse Miyake", price: 2500, size: "50 ml", image: "isse miyake.png", description: "A study in absolute clarity, balancing tart yuzu with still, aquatic lotus. It wears like a quiet morning rain—pure, minimalist, and deeply tranquil." },
+            { id: 9, name: "Impression of Azzaro Chrome", price: 2500, size: "50 ml", image: "azzaro chrome.png", description: "A sharp, metallic burst of citrus that cuts through the heat with absolute precision. It shines with a crisp, clear freshness that feels endlessly pure." },
+            { id: 10, name: "Impression of Black Orchid Tomford", price: 2500, size: "50 ml", image: "Black Orchid Tomford.png", description: "Dangerously seductive and drenched in shadows, weaving dark chocolate, rare florals, and earthy incense. It is a midnight affair that demands complete surrender." },
+            { id: 11, name: "Impression of Bombshell", price: 2500, size: "50 ml", image: "Bombshell.png", description: "A sudden, brilliant flash of pink peony and tart grapefruit that demands the spotlight. It is unabashedly glamorous, leaving a trail of pure, magnetic confidence." },
+            { id: 12, name: "Impression of Hugo boss", price: 2500, size: "50 ml", image: "Hugo Boss.png", description: "Crisp apple and warm cinnamon form a perfectly tailored silhouette of modern masculinity. It wears like a bespoke suit—sharp, grounded, and quietly authoritative." },
+            { id: 13, name: "Impression of Creed Aventus", price: 2500, size: "50 ml", image: "Creed Aventus.png", description: "A majestic collision of smoked pineapple and dark birchwood that announces arriving power. It is the scent of triumph, worn by those who shape the world around them." },
+            { id: 14, name: "Impression of Zarar", price: 1800, size: "50 ml", image: "Zarar.png", description: "A deep, commanding fusion of rich spices and ancient woods that speaks of heritage and strength. It settles on the skin like a mantle of quiet authority." },
+            { id: 15, name: "Impression of David Beckham", price: 2500, size: "50 ml", image: "David Beckham.png", description: "A sharp, modern edge of vetiver and crisp citrus that defines contemporary masculinity. It perfectly balances raw ambition with effortless, refined charm." },
+            { id: 16, name: "Impression of Uroosa", price: 2000, size: "50 ml", image: "Uroosa.png", description: "A joyous celebration of spun sugar and delicate petals that dances lightly on the skin. It radiates a soft, youthful warmth that feels wonderfully inviting." },
+            { id: 17, name: "Impression of 502", price: 2500, size: "50 ml", image: "502.png", description: "A bold strike of modern citrus and deep woods designed for absolute clarity and focus. It cuts through the noise, leaving an aura of crisp, unshakable resolve." },
+            { id: 18, name: "Impression of Chanel", price: 2500, size: "50 ml", image: "chanel.png", description: "An absolute masterclass in timeless elegance, wrapping delicate aldehydes in rich, golden warmth. It does not just scent the skin; it drapes it in undeniable luxury." },
+            { id: 19, name: "Impression of One Million", price: 2500, size: "50 ml", image: "One Million.png", description: "A lavish pour of blood mandarin, warm cinnamon, and rich leather that defies subtlety. It is an intoxicating rush of pure, unapologetic extravagance." },
+            { id: 20, name: "Impression of Versace Bright Crystal", price: 2500, size: "50 ml", image: "Versace Bright Crystal.png", description: "A fragile, icy delicacy of chilled pomegranate and watery lotus flowers. It shimmers with a crystalline purity that feels beautifully elusive." },
+            { id: 21, name: "Impression of Gucci Flora", price: 2500, size: "50 ml", image: "Gucci Flora.png", description: "A wildly romantic breeze carrying the sweet, airy nectar of osmanthus and fresh peony. It feels like stepping into a sun-drenched botanical dream." },
+            { id: 22, name: "Impression of Janan Sports", price: 2000, size: "50 ml", image: "Janan Sports.png", description: "A sudden, electrifying jolt of cool citrus and energetic greens. It moves with a restless, forward momentum that perfectly captures the spirit of motion." },
+            { id: 23, name: "Impression of Office For Men", price: 2500, size: "50 ml", image: "Office For Men.png", description: "A razor-sharp opening of bergamot and ambroxan that commands immediate respect. It is a brilliantly clean, authoritative signature designed for absolute professional dominance." }
         ];
 
-        // NEW: Pull cart data from LocalStorage, or start empty
+        // Pull cart data from LocalStorage
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
-            if(!grid) return; // Only run if the grid exists on the current page
+            if(!grid) return; 
             
             grid.innerHTML = products.map(product => {
                 let imageHtml = product.image 
@@ -684,6 +719,9 @@
             document.getElementById('pv-price').innerText = `Rs. ${product.price.toLocaleString()}`;
             document.getElementById('pv-size').innerText = product.size;
             
+            const defaultDesc = "A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.";
+            document.getElementById('pv-desc-text').innerText = product.description ? product.description : defaultDesc;
+            
             document.getElementById('pv-button-container').innerHTML = `
                 <button class="add-to-cart" style="background: var(--black); color: var(--white);" onclick="addToCartAndClose(${product.id})">Add to Cart - Rs. ${product.price.toLocaleString()}</button>
             `;
@@ -712,7 +750,7 @@
             updateCartUI();
             
             const modal = document.getElementById('cart-modal');
-            if(modal.style.display !== 'flex') {
+            if(!modal.classList.contains('active')) {
                 toggleCart();
             }
         }
@@ -734,7 +772,6 @@
         }
 
         function updateCartUI() {
-            // NEW: Save the cart to the browser's memory every time it changes
             localStorage.setItem('syedCart', JSON.stringify(cart));
             
             const container = document.getElementById('cart-items-container');
@@ -776,7 +813,14 @@
 
         function toggleCart() {
             const modal = document.getElementById('cart-modal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+            modal.classList.toggle('active');
+        }
+
+        function toggleNav() {
+            const nav = document.getElementById('nav-drawer');
+            const btn = document.querySelector('.hamburger-btn');
+            nav.classList.toggle('active');
+            btn.classList.toggle('open');
         }
 
         function closeConfirmation() {
@@ -831,7 +875,7 @@
                 if (WHATSAPP_NUMBER === "") {
                     document.getElementById('confirmation-modal').style.display = 'flex';
                     cart = []; 
-                    updateCartUI(); // This will also clear LocalStorage
+                    updateCartUI(); 
                     
                     document.getElementById('cust-name').value = '';
                     document.getElementById('cust-phone').value = '';
@@ -862,9 +906,27 @@
             });
         }
 
+        // NEW: Smart listener to close sliding menus when clicking completely outside of them
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('nav-drawer');
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const cartModal = document.getElementById('cart-modal');
+            const cartBtn = document.querySelector('.cart-btn');
+
+            // Close Navigation Drawer
+            if (nav && nav.classList.contains('active') && !nav.contains(event.target) && hamburgerBtn && !hamburgerBtn.contains(event.target)) {
+                toggleNav();
+            }
+
+            // Close Cart Drawer (ignores clicks on "Add to Cart" buttons to prevent immediate closing)
+            if (cartModal && cartModal.classList.contains('active') && !cartModal.contains(event.target) && cartBtn && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
+                toggleCart();
+            }
+        });
+
         // Initialize the page
         renderProducts();
-        updateCartUI(); // Call this immediately so the cart icon shows the right number on load
+        updateCartUI(); 
     </script>
 </body>
 </html>

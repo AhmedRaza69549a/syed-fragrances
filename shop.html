@@ -9,7 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- OPEN GRAPH TAGS (FOR WHATSAPP/INSTA LINK PREVIEWS) -->
+    <meta property="og:title" content="SYED FRAGRANCES">
+    <meta property="og:description" content="The art of invisible presence. Crafted with uncompromising standards and the rarest raw materials.">
+    <meta property="og:image" content="https://ahmedraza69549a.github.io/logo.png">
+    <meta property="og:url" content="https://ahmedraza69549a.github.io/">
+    <meta property="og:type" content="website">
 
     <style>
         :root {
@@ -166,19 +174,18 @@
             letter-spacing: -0.01em;
         }
 
-        /* ── SEARCH BAR CSS ── */
+        /* ── SEARCH BAR CSS (LEFT ALIGNED) ── */
         .search-container {
-            max-width: 500px;
-            margin: 0 auto 60px auto;
-            display: flex;
-            justify-content: center;
+            max-width: 320px;
+            margin: 0 0 40px 0;
+            display: block;
         }
 
         #search-input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             font-family: var(--sans);
-            font-size: 14px;
+            font-size: 13px;
             border: 0.5px solid var(--border);
             background-color: var(--white);
             color: var(--black);
@@ -286,6 +293,7 @@
             color: var(--white);
         }
 
+        /* ── CART MODAL ── */
         #cart-modal {
             display: flex; 
             position: fixed;
@@ -571,7 +579,7 @@
             <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 24px auto;"></div>
         </div>
 
-        <!-- ── ADDED SEARCH BAR HTML ── -->
+        <!-- ── MOVED SEARCH BAR HTML ── -->
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search by name or scent profile..." onkeyup="filterProducts()">
         </div>
@@ -669,7 +677,6 @@
 
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
-        // ── SEARCH BAR FUNCTION ──
         function filterProducts() {
             const query = document.getElementById('search-input').value.toLowerCase();
             const filteredArray = products.filter(product => {
@@ -679,7 +686,6 @@
             renderProducts(filteredArray);
         }
 
-        // Updated to accept an array so we can pass filtered results into it
         function renderProducts(productsToRender = products) {
             const grid = document.getElementById('product-grid');
             if(!grid) return; 

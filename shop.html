@@ -9,15 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
-    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="logo.png">
-
-    <!-- OPEN GRAPH TAGS (FOR WHATSAPP/INSTA LINK PREVIEWS) -->
-    <meta property="og:title" content="SYED FRAGRANCES">
-    <meta property="og:description" content="The art of invisible presence. Crafted with uncompromising standards and the rarest raw materials.">
-    <meta property="og:image" content="https://ahmedraza69549a.github.io/logo.png">
-    <meta property="og:url" content="https://ahmedraza69549a.github.io/">
-    <meta property="og:type" content="website">
 
     <style>
         :root {
@@ -82,18 +74,9 @@
             background-color: var(--gold);
         }
 
-        /* Animated X lines */
-        .hamburger-btn.open span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-        
-        .hamburger-btn.open span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .hamburger-btn.open span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
+        .hamburger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
         #nav-drawer {
             display: flex; 
@@ -110,9 +93,7 @@
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
 
-        #nav-drawer.active {
-            transform: translateX(0);
-        }
+        #nav-drawer.active { transform: translateX(0); }
 
         .nav-drawer-links {
             padding: 40px;
@@ -130,9 +111,7 @@
             transition: color 0.3s;
         }
 
-        .nav-link:hover {
-            color: var(--gold);
-        }
+        .nav-link:hover { color: var(--gold); }
 
         .logo-container {
             display: flex;
@@ -172,13 +151,12 @@
             padding: 100px 5%;
             max-width: 1400px;
             margin: 0 auto;
-            /* Ensures footer stays at bottom if grid is small */
             min-height: 80vh; 
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .section-title {
@@ -186,6 +164,31 @@
             font-size: 42px;
             font-weight: 300;
             letter-spacing: -0.01em;
+        }
+
+        /* ── SEARCH BAR CSS ── */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 60px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-family: var(--sans);
+            font-size: 14px;
+            border: 0.5px solid var(--border);
+            background-color: var(--white);
+            color: var(--black);
+            letter-spacing: 0.05em;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: var(--black);
         }
 
         .grid {
@@ -283,7 +286,6 @@
             color: var(--white);
         }
 
-        /* ── CART MODAL ── */
         #cart-modal {
             display: flex; 
             position: fixed;
@@ -299,9 +301,7 @@
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
 
-        #cart-modal.active {
-            transform: translateX(0);
-        }
+        #cart-modal.active { transform: translateX(0); }
 
         .cart-header {
             padding: 40px;
@@ -356,9 +356,7 @@
             transition: background 0.2s;
         }
 
-        .cart-qty-btn:hover {
-            background: #eaeaea;
-        }
+        .cart-qty-btn:hover { background: #eaeaea; }
 
         .cart-footer {
             padding: 40px;
@@ -379,9 +377,7 @@
             outline: none;
         }
         
-        .checkout-form input:focus {
-            border-color: var(--black);
-        }
+        .checkout-form input:focus { border-color: var(--black); }
 
         .checkbox-container {
             display: flex;
@@ -413,11 +409,8 @@
             transition: background 0.3s;
         }
         
-        .whatsapp-checkout:hover {
-            background: #333;
-        }
+        .whatsapp-checkout:hover { background: #333; }
 
-        /* ── PRODUCT VIEW MODAL (QUICK VIEW) ── */
         #product-view-modal {
             display: none;
             position: fixed;
@@ -487,7 +480,6 @@
             margin-bottom: 30px;
         }
 
-        /* ── ORDER CONFIRMATION MODAL ── */
         #confirmation-modal {
             display: none;
             position: fixed;
@@ -536,14 +528,10 @@
             transition: color 0.3s;
         }
 
-        .social-link:hover {
-            color: var(--gold);
-        }
+        .social-link:hover { color: var(--gold); }
 
         @media (max-width: 768px) {
-            .logo-container img {
-                height: 120px; 
-            }
+            .logo-container img { height: 120px; }
         }
     </style>
 </head>
@@ -582,6 +570,12 @@
             <h2 class="section-title">The Collection</h2>
             <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 24px auto;"></div>
         </div>
+
+        <!-- ── ADDED SEARCH BAR HTML ── -->
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search by name or scent profile..." onkeyup="filterProducts()">
+        </div>
+
         <div class="grid" id="product-grid">
             <!-- Products injected by JavaScript -->
         </div>
@@ -589,12 +583,11 @@
 
     <footer>
         <div class="footer-content">
-            <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" class="social-link">INSTAGRAM</a>
+            <a href="https://www.instagram.com/fragrancesyed" target="_blank" class="social-link">INSTAGRAM</a>
             <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
         </div>
     </footer>
 
-    <!-- Cart Modal -->
     <div id="cart-modal">
         <div class="cart-header">
             <h2>Your Cart</h2>
@@ -621,24 +614,20 @@
         </div>
     </div>
 
-    <!-- Product Quick View Modal WITH NEW CLICK OUTSIDE TO CLOSE -->
     <div id="product-view-modal" onclick="closeProductView()">
         <div class="pv-content" onclick="event.stopPropagation()">
             <button class="pv-close" onclick="closeProductView()">×</button>
-            <div class="pv-image-container" id="pv-image">
-                <!-- Image goes here -->
-            </div>
+            <div class="pv-image-container" id="pv-image"></div>
             <div class="pv-details">
                 <p class="product-size" id="pv-size">50 ML</p>
                 <h2 id="pv-title">Product Name</h2>
                 <p class="product-price" id="pv-price" style="font-size: 16px; margin-bottom: 16px;">Rs. 0</p>
-                <p class="pv-desc" id="pv-desc-text">A masterpiece of olfactory design. High concentration formula crafted with premium ingredients for long-lasting sillage.</p>
+                <p class="pv-desc" id="pv-desc-text"></p>
                 <div id="pv-button-container"></div>
             </div>
         </div>
     </div>
 
-    <!-- Custom Order Confirmation Modal -->
     <div id="confirmation-modal">
         <div class="confirm-content">
             <h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px;">Thank You</h2>
@@ -650,7 +639,7 @@
 
     <script>
         const WHATSAPP_NUMBER = ""; 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
 
         const products = [
             { id: 1, name: "Impression of Sensation", price: 2500, size: "50 ml", image: "sensation.png", description: "A quiet embrace of warm amber and milky woods that melts into the skin. It is the scent of unspoken confidence, resting softly yet leaving a profound memory." },
@@ -678,14 +667,29 @@
             { id: 23, name: "Impression of Office For Men", price: 2500, size: "50 ml", image: "Office For Men.png", description: "A razor-sharp opening of bergamot and ambroxan that commands immediate respect. It is a brilliantly clean, authoritative signature designed for absolute professional dominance." }
         ];
 
-        // Pull cart data from LocalStorage
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
-        function renderProducts() {
+        // ── SEARCH BAR FUNCTION ──
+        function filterProducts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filteredArray = products.filter(product => {
+                return product.name.toLowerCase().includes(query) || 
+                       product.description.toLowerCase().includes(query);
+            });
+            renderProducts(filteredArray);
+        }
+
+        // Updated to accept an array so we can pass filtered results into it
+        function renderProducts(productsToRender = products) {
             const grid = document.getElementById('product-grid');
             if(!grid) return; 
             
-            grid.innerHTML = products.map(product => {
+            if (productsToRender.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; color: #888; grid-column: 1 / -1; padding: 40px;">No fragrances match your search.</p>';
+                return;
+            }
+
+            grid.innerHTML = productsToRender.map(product => {
                 let imageHtml = product.image 
                     ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`
                     : `Image Space`;
@@ -873,7 +877,6 @@
                 checkoutBtn.disabled = false;
 
                 if (WHATSAPP_NUMBER === "") {
-                    document.getElementById('confirmation-modal').style.display = 'flex';
                     cart = []; 
                     updateCartUI(); 
                     
@@ -883,6 +886,7 @@
                     document.getElementById('gift-wrap').checked = false;
 
                     toggleCart(); 
+                    document.getElementById('confirmation-modal').style.display = 'flex';
                 } else {
                     let message = `*New Order - Syed Fragrances*\n\n`;
                     message += `*Customer:* ${name}\n`;
@@ -906,25 +910,21 @@
             });
         }
 
-        // NEW: Smart listener to close sliding menus when clicking completely outside of them
         document.addEventListener('click', function(event) {
             const nav = document.getElementById('nav-drawer');
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const cartModal = document.getElementById('cart-modal');
             const cartBtn = document.querySelector('.cart-btn');
 
-            // Close Navigation Drawer
             if (nav && nav.classList.contains('active') && !nav.contains(event.target) && hamburgerBtn && !hamburgerBtn.contains(event.target)) {
                 toggleNav();
             }
 
-            // Close Cart Drawer (ignores clicks on "Add to Cart" buttons to prevent immediate closing)
             if (cartModal && cartModal.classList.contains('active') && !cartModal.contains(event.target) && cartBtn && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
                 toggleCart();
             }
         });
 
-        // Initialize the page
         renderProducts();
         updateCartUI(); 
     </script>

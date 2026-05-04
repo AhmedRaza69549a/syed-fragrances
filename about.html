@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <link rel="icon" type="image/png" href="logo.png">
+
     <style>
         :root {
             --black: #0a0a0a;
@@ -48,7 +50,6 @@
             z-index: 100;
         }
 
-        /* ── HAMBURGER MENU ICON ── */
         .hamburger-btn {
             background: none;
             border: none;
@@ -73,20 +74,10 @@
             background-color: var(--gold);
         }
 
-        /* Animated X lines */
-        .hamburger-btn.open span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-        
-        .hamburger-btn.open span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .hamburger-btn.open span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
+        .hamburger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        /* ── SIDE NAVIGATION DRAWER ── */
         #nav-drawer {
             display: flex; 
             position: fixed;
@@ -102,9 +93,7 @@
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
 
-        #nav-drawer.active {
-            transform: translateX(0);
-        }
+        #nav-drawer.active { transform: translateX(0); }
 
         .nav-drawer-links {
             padding: 40px;
@@ -122,9 +111,7 @@
             transition: color 0.3s;
         }
 
-        .nav-link:hover {
-            color: var(--gold);
-        }
+        .nav-link:hover { color: var(--gold); }
 
         .logo-container {
             display: flex;
@@ -160,7 +147,6 @@
             color: var(--white);
         }
 
-        /* ── ABOUT PAGE SPECIFIC STYLES ── */
         .about-section {
             padding: 120px 5%;
             max-width: 800px;
@@ -198,24 +184,6 @@
             margin-top: 60px;
         }
 
-        .social-btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: var(--black);
-            color: var(--white);
-            text-decoration: none;
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            transition: background 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .social-btn:hover {
-            background: #333;
-        }
-
-        /* ── CART MODAL ── */
         #cart-modal {
             display: flex; 
             position: fixed;
@@ -231,9 +199,7 @@
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
 
-        #cart-modal.active {
-            transform: translateX(0);
-        }
+        #cart-modal.active { transform: translateX(0); }
 
         .cart-header {
             padding: 40px;
@@ -288,9 +254,7 @@
             transition: background 0.2s;
         }
 
-        .cart-qty-btn:hover {
-            background: #eaeaea;
-        }
+        .cart-qty-btn:hover { background: #eaeaea; }
 
         .cart-footer {
             padding: 40px;
@@ -311,9 +275,7 @@
             outline: none;
         }
         
-        .checkout-form input:focus {
-            border-color: var(--black);
-        }
+        .checkout-form input:focus { border-color: var(--black); }
 
         .checkbox-container {
             display: flex;
@@ -345,35 +307,8 @@
             transition: background 0.3s;
         }
         
-        .whatsapp-checkout:hover {
-            background: #333;
-        }
+        .whatsapp-checkout:hover { background: #333; }
 
-        /* ── ORDER CONFIRMATION MODAL ── */
-        #confirmation-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100vh;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .confirm-content {
-            background: var(--white);
-            width: 100%;
-            max-width: 450px;
-            padding: 60px 40px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        /* ── FOOTER ── */
         footer {
             background: var(--black);
             color: var(--white);
@@ -399,20 +334,15 @@
             transition: color 0.3s;
         }
 
-        .social-link:hover {
-            color: var(--gold);
-        }
+        .social-link:hover { color: var(--gold); }
 
         @media (max-width: 768px) {
-            .logo-container img {
-                height: 120px; 
-            }
+            .logo-container img { height: 120px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ── NAVIGATION DRAWER ── -->
     <div id="nav-drawer">
         <div class="cart-header">
             <h2>Menu</h2>
@@ -441,7 +371,6 @@
         </div>
     </header>
 
-    <!-- ── ABOUT CONTENT ── -->
     <main class="about-section">
         <h1 class="about-title">Our Story</h1>
         <div class="about-divider"></div>
@@ -453,20 +382,18 @@
             Crafted with strict standards, our high-concentration impressions use the finest raw materials to ensure lasting sillage. Every bottle is a private conversation between you and the world.
         </p>
         
-        <h2 class="founder-title">The Founder</h2>
+        <h2 class="founder-title">The Founders</h2>
         <p class="about-text">
-            Founded by M.A.R.K., Syed Fragrances bridges the gap between luxury and accessibility. With a sharp eye for detail and a dedication to the craft, the vision was to build a house where high-end olfactory design is available for the modern connoisseur.
+            Syed Fragrances is a collaborative vision built by Syed Wajahat and M.A.R.K. 
         </p>
-        
-        <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" class="social-btn">
-            Follow on Instagram
-        </a>
+        <p class="about-text">
+            Wajahat directs the craft—overseeing the delicate process of perfume making, formulation, and packaging design to ensure every bottle meets the highest standard. M.A.R.K. commands the brand's digital presence and marketing strategy, translating the physical product into a complete online experience. Together, their combined focus bridges the gap between high-end olfactory design and modern accessibility.
+        </p>
     </main>
 
     <footer>
         <div class="footer-content">
-            <!-- PASTE YOUR INSTAGRAM LINK BELOW -->
-            <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" class="social-link">INSTAGRAM</a>
+            <a href="https://www.instagram.com/fragrancesyed" target="_blank" class="social-link">INSTAGRAM</a>
             <p>&copy; 2026 Syed Fragrances. Worldwide.</p>
         </div>
     </footer>
@@ -498,21 +425,10 @@
         </div>
     </div>
 
-    <!-- Custom Order Confirmation Modal -->
-    <div id="confirmation-modal">
-        <div class="confirm-content">
-            <h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px;">Thank You</h2>
-            <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 0 auto 24px auto;"></div>
-            <p style="font-size: 14px; color: var(--mid); margin-bottom: 40px; line-height: 1.8;">Your order has been successfully received. Our team will contact you shortly to confirm your delivery details.</p>
-            <button class="add-to-cart" style="background: var(--black); color: var(--white);" onclick="closeConfirmation()">Continue Shopping</button>
-        </div>
-    </div>
-
     <script>
         const WHATSAPP_NUMBER = ""; 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
 
-        // Pull cart data from LocalStorage
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
         function updateQuantity(productId, change) {
@@ -532,7 +448,6 @@
         }
 
         function updateCartUI() {
-            // Save the cart to the browser's memory every time it changes
             localStorage.setItem('syedCart', JSON.stringify(cart));
             
             const container = document.getElementById('cart-items-container');
@@ -584,10 +499,6 @@
             btn.classList.toggle('open');
         }
 
-        function closeConfirmation() {
-            document.getElementById('confirmation-modal').style.display = 'none';
-        }
-
         function checkoutViaWhatsApp() {
             if (cart.length === 0) {
                 alert("Your cart is empty.");
@@ -634,9 +545,8 @@
                 checkoutBtn.disabled = false;
 
                 if (WHATSAPP_NUMBER === "") {
-                    document.getElementById('confirmation-modal').style.display = 'flex';
                     cart = []; 
-                    updateCartUI(); // This will also clear LocalStorage
+                    updateCartUI(); 
                     
                     document.getElementById('cust-name').value = '';
                     document.getElementById('cust-phone').value = '';
@@ -644,6 +554,7 @@
                     document.getElementById('gift-wrap').checked = false;
 
                     toggleCart(); 
+                    alert("Order received successfully.");
                 } else {
                     let message = `*New Order - Syed Fragrances*\n\n`;
                     message += `*Customer:* ${name}\n`;
@@ -667,25 +578,21 @@
             });
         }
 
-        // NEW: Smart listener to close sliding menus when clicking completely outside of them
         document.addEventListener('click', function(event) {
             const nav = document.getElementById('nav-drawer');
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const cartModal = document.getElementById('cart-modal');
             const cartBtn = document.querySelector('.cart-btn');
 
-            // Close Navigation Drawer
             if (nav && nav.classList.contains('active') && !nav.contains(event.target) && hamburgerBtn && !hamburgerBtn.contains(event.target)) {
                 toggleNav();
             }
 
-            // Close Cart Drawer (ignores clicks on "Add to Cart" buttons to prevent immediate closing)
             if (cartModal && cartModal.classList.contains('active') && !cartModal.contains(event.target) && cartBtn && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
                 toggleCart();
             }
         });
 
-        // Initialize the cart data immediately on page load
         updateCartUI(); 
     </script>
 </body>

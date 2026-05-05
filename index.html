@@ -1118,12 +1118,17 @@
             const cartBtn = document.querySelector('.cart-btn');
 
             // Close Navigation Drawer
-            if (nav.classList.contains('active') && !nav.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+            if (nav && nav.classList.contains('active') && !nav.contains(event.target) && hamburgerBtn && !hamburgerBtn.contains(event.target)) {
                 toggleNav();
             }
 
             // Close Cart Drawer (ignores clicks on "Add to Cart" buttons to prevent immediate closing)
-            if (cartModal.classList.contains('active') && !cartModal.contains(event.target) && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
+            if (cartModal && cartModal.classList.contains('active') && !cartModal.contains(event.target) && cartBtn && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
+                
+                // BUG FIX: When you click + or -, the cart redraws instantly and deletes the button you just clicked. 
+                // This checks if the clicked element still exists in the page before closing the cart.
+                if (!document.body.contains(event.target)) return;
+
                 toggleCart();
             }
         });

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping & Delivery — SYED FRAGRANCES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        :root { --black: #0a0a0a; --white: #F8F6F2; --gold: #C4A35A; --mid: #888; --border: #E0DDD6; --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Jost', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--white); color: var(--black); font-family: var(--sans); font-weight: 300; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        header { padding: 15px 5%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: rgba(248, 246, 242, 0.95); backdrop-filter: blur(10px); z-index: 100; }
+        .hamburger-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 5px; }
+        .hamburger-btn span { display: block; width: 28px; height: 3px; background-color: var(--black); border-radius: 3px; transition: all 0.3s ease; }
+        .hamburger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        #nav-drawer { display: flex; position: fixed; top: 0; left: 0; width: 100%; max-width: 350px; height: 100vh; background: var(--white); border-right: 0.5px solid var(--border); box-shadow: 10px 0 30px rgba(0,0,0,0.05); z-index: 2000; flex-direction: column; transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        #nav-drawer.active { transform: translateX(0); }
+        .nav-drawer-links { padding: 40px; display: flex; flex-direction: column; gap: 30px; }
+        .nav-link { color: var(--black); text-decoration: none; font-family: var(--serif); font-size: 28px; font-weight: 300; transition: color 0.3s; }
+        .nav-link:hover { color: var(--gold); }
+        .logo-container { display: flex; justify-content: center; text-decoration: none; }
+        .logo-container img { height: 180px; object-fit: contain; }
+        .header-right { display: flex; justify-content: flex-end; }
+        .cart-btn { background: transparent; border: 0.5px solid var(--black); color: var(--black); padding: 12px 24px; cursor: pointer; font-family: var(--sans); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s ease; }
+        .policy-section { padding: 120px 5%; max-width: 800px; margin: 0 auto; min-height: 60vh; }
+        .policy-title { font-family: var(--serif); font-size: 48px; font-weight: 300; margin-bottom: 24px; text-align: center; }
+        .policy-divider { height: 0.5px; background: var(--gold); width: 40px; margin: 0 auto 40px auto; }
+        .policy-text { color: var(--mid); line-height: 2; margin-bottom: 30px; font-size: 16px; }
+        .policy-subtitle { font-family: var(--serif); font-size: 24px; font-weight: 400; margin-bottom: 15px; color: var(--black); }
+        #cart-modal { display: flex; position: fixed; top: 0; right: 0; width: 100%; max-width: 450px; height: 100vh; background: var(--white); border-left: 0.5px solid var(--border); box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 1000; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        #cart-modal.active { transform: translateX(0); }
+        .mega-footer { background: var(--black); color: var(--white); padding: 80px 5% 20px; font-family: var(--sans); }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px; max-width: 1400px; margin: 0 auto; }
+        .footer-col h4 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+        .footer-col p, .footer-col a { font-size: 12px; color: #888; text-decoration: none; display: block; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <div id="nav-drawer">
+        <div class="nav-drawer-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+    </div>
+    <header>
+        <div class="header-left"><button class="hamburger-btn" onclick="toggleNav()"><span></span><span></span><span></span></button></div>
+        <a href="index.html" class="logo-container"><img src="logo.png" alt="Syed Fragrances Logo"></a>
+        <div class="header-right"><button class="cart-btn" onclick="toggleCart()">Cart</button></div>
+    </header>
+
+    <main class="policy-section">
+        <h1 class="policy-title">Shipping & Delivery</h1>
+        <div class="policy-divider"></div>
+        <p class="policy-text">At Syed Fragrances, we ensure our high-concentration impressions reach your doorstep through reliable and trusted courier partners across Pakistan.</p>
+        
+        <h2 class="policy-subtitle">Processing & Transit Times</h2>
+        <p class="policy-text">Orders are typically prepared and dispatched within 1-2 business days. For deliveries within Karachi, you can expect your package to arrive within 2-5 business days. Timelines for other regions may vary based on the specific destination.</p>
+        
+        <h2 class="policy-subtitle">Shipment Tracking</h2>
+        <p class="policy-text">Once your order is handed over to the courier service, we are no longer liable for delays caused by the transit provider. However, we remain committed to assisting you if any logistical issues arise during the journey of your package.</p>
+        
+        <h2 class="policy-subtitle">Support</h2>
+        <p class="policy-text">If you have concerns regarding your delivery, our customer service team is ready to assist to ensure your experience remains seamless and satisfying. Contact us via WhatsApp for immediate inquiries.</p>
+    </main>
+
+    <footer class="mega-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Customer Support</h4>
+                <a href="shipping.html">Delivery & Orders</a>
+                <a href="returns.html">Returns & Exchanges</a>
+                <a href="faq.html">FAQs</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() { document.getElementById('nav-drawer').classList.toggle('active'); document.querySelector('.hamburger-btn').classList.toggle('open'); }
+        function toggleCart() { alert("Please manage cart from Shop or Home page."); }
+    </script>
+</body>
+</html>

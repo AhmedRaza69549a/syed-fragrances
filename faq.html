@@ -20,6 +20,7 @@
             --border: #E0DDD6;
             --serif: 'Cormorant Garamond', Georgia, serif;
             --sans: 'Jost', sans-serif;
+            --success: #2e7d32;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -68,7 +69,7 @@
         .about-title { font-family: var(--serif); font-size: 48px; font-weight: 300; margin-bottom: 24px; }
         .about-divider { height: 0.5px; background: var(--gold); width: 40px; margin: 0 auto 40px auto; }
         .about-text { color: var(--mid); line-height: 2; margin-bottom: 30px; font-size: 16px; }
-        .founder-title { font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px; }
+        .founder-title { font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px; margin-top: 30px; }
 
         #cart-modal {
             display: flex; position: fixed; top: 0; right: 0; width: 100%; max-width: 450px; height: 100vh;
@@ -77,9 +78,17 @@
         }
 
         #cart-modal.active { transform: translateX(0); }
-        .cart-header { padding: 40px; border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header { padding: 40px 40px 20px; border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .cart-header h2 { font-family: var(--serif); font-size: 28px; font-weight: 300; }
         .close-btn { cursor: pointer; font-size: 32px; font-weight: 300; background: none; border: none; color: var(--mid); }
+        
+        /* ── CART MOTIVATOR ── */
+        .shipping-motivator { padding: 0 40px 20px; border-bottom: 0.5px solid var(--border); background: #fdfdfc; }
+        .motivator-text { font-size: 12px; letter-spacing: 0.05em; margin-bottom: 10px; color: var(--black); text-align: center; }
+        .progress-bar-container { width: 100%; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--gold); transition: width 0.4s ease, background-color 0.4s ease; }
+        .progress-bar-fill.success { background: var(--success); }
+
         .cart-items { flex-grow: 1; overflow-y: auto; padding: 40px; }
         .cart-item { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 0.5px solid var(--border); }
         .cart-item-title { font-family: var(--serif); font-size: 18px; margin-bottom: 4px; }
@@ -92,6 +101,31 @@
         .checkbox-container input { margin-right: 10px; width: auto; cursor: pointer; }
         .whatsapp-checkout { width: 100%; padding: 18px; background: var(--black); color: var(--white); border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.2em; font-family: var(--sans); font-size: 11px; margin-top: 12px; transition: background 0.3s; }
         .whatsapp-checkout:hover { background: #333; }
+
+        /* ── ANIMATED HOVER LINKS ── */
+        .nav-link, .footer-col a, .footer-bottom-links a {
+            position: relative;
+            display: inline-block;
+            width: max-content;
+        }
+
+        .nav-link::after, .footer-col a::after, .footer-bottom-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .nav-link:hover::after, .footer-col a:hover::after, .footer-bottom-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
 
         /* ── MEGA FOOTER ── */
         .mega-footer { background: var(--black); color: var(--white); border-top: 0.5px solid var(--border); padding: 80px 5% 20px; font-family: var(--sans); }
@@ -147,27 +181,27 @@
         <h1 class="about-title">Frequently Asked Questions</h1>
         <div class="about-divider"></div>
         
-        <h2 class="founder-title" style="margin-top: 30px;">Are these original perfumes?</h2>
+        <h2 class="founder-title">Are these original perfumes?</h2>
         <p class="about-text">
             These are original high-quality impressions created by Syed Fragrances. We use premium ingredients to create inspired aromas that capture the essence of designer favorites.
         </p>
 
-        <h2 class="founder-title" style="margin-top: 30px;">Legal Disclaimer</h2>
+        <h2 class="founder-title">Legal Disclaimer</h2>
         <p class="about-text">
             Syed Fragrances competes with designer brands but is not associated with them or their manufacturers. All trademarks belong to their respective owners. We operate in full compliance with the Competition Commission of Pakistan’s Act and policies.
         </p>
 
-        <h2 class="founder-title" style="margin-top: 30px;">Is it permissible to use these for Namaz?</h2>
+        <h2 class="founder-title">Is it permissible to use these for Namaz?</h2>
         <p class="about-text">
             Yes. The alcohol used in our fragrances is intended for external application and is not derived from the fermentation process meant for consumption (khamr). Namaz performed while wearing these perfumes is fully acceptable.
         </p>
 
-        <h2 class="founder-title" style="margin-top: 30px;">What is the oil concentration?</h2>
+        <h2 class="founder-title">What is the oil concentration?</h2>
         <p class="about-text">
             Our fragrances feature a high average concentration of approximately 35%, ensuring a robust sillage and projection.
         </p>
 
-        <h2 class="founder-title" style="margin-top: 30px;">How long do the scents last?</h2>
+        <h2 class="founder-title">How long do the scents last?</h2>
         <p class="about-text">
             Performance varies by scent profile, application area, and weather. Our satisfied customers are the proof of our long-lasting perfumes.
         </p>
@@ -265,6 +299,7 @@
     <script>
         const WHATSAPP_NUMBER = ""; 
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
+        const FREE_SHIPPING_THRESHOLD = 5000;
 
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
@@ -290,6 +325,8 @@
             const container = document.getElementById('cart-items-container');
             const countSpan = document.getElementById('cart-count');
             const totalSpan = document.getElementById('cart-total');
+            const msgEl = document.getElementById('motivator-message');
+            const barEl = document.getElementById('motivator-bar');
 
             countSpan.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
             
@@ -323,19 +360,21 @@
 
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
 
-                // Update Free Shipping Motivator
-            let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
-            if (progress >= 100) {
-                barEl.style.width = '100%';
-                barEl.classList.add('success');
-                msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
-                msgEl.style.color = "var(--success)";
-            } else {
-                barEl.style.width = progress + '%';
-                barEl.classList.remove('success');
-                const remaining = FREE_SHIPPING_THRESHOLD - total;
-                msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
-                msgEl.style.color = "var(--black)";
+            // Update Free Shipping Motivator
+            if (msgEl && barEl) {
+                let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
+                if (progress >= 100) {
+                    barEl.style.width = '100%';
+                    barEl.classList.add('success');
+                    msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
+                    msgEl.style.color = "var(--success)";
+                } else {
+                    barEl.style.width = progress + '%';
+                    barEl.classList.remove('success');
+                    const remaining = FREE_SHIPPING_THRESHOLD - total;
+                    msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
+                    msgEl.style.color = "var(--black)";
+                }
             }
         }
 
@@ -382,6 +421,12 @@
                 orderString += `- ${item.quantity}x ${item.name} (${item.size}) - Rs. ${item.price * item.quantity}\n`;
                 total += item.price * item.quantity;
             });
+
+            if (total < FREE_SHIPPING_THRESHOLD) {
+                orderString += `\n*Shipping:* Standard Delivery Charges Apply`;
+            } else {
+                orderString += `\n*Shipping:* FREE`;
+            }
 
             const orderData = {
                 name: name,

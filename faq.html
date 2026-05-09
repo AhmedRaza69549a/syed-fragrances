@@ -322,6 +322,21 @@
             }
 
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
+
+                // Update Free Shipping Motivator
+            let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
+            if (progress >= 100) {
+                barEl.style.width = '100%';
+                barEl.classList.add('success');
+                msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
+                msgEl.style.color = "var(--success)";
+            } else {
+                barEl.style.width = progress + '%';
+                barEl.classList.remove('success');
+                const remaining = FREE_SHIPPING_THRESHOLD - total;
+                msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
+                msgEl.style.color = "var(--black)";
+            }
         }
 
         function toggleCart() {

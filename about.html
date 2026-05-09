@@ -20,6 +20,7 @@
             --border: #E0DDD6;
             --serif: 'Cormorant Garamond', Georgia, serif;
             --sans: 'Jost', sans-serif;
+            --success: #2e7d32;
         }
 
         * {
@@ -184,6 +185,7 @@
             margin-top: 60px;
         }
 
+        /* ── CART MODAL & MOTIVATOR ── */
         #cart-modal {
             display: flex; 
             position: fixed;
@@ -202,7 +204,7 @@
         #cart-modal.active { transform: translateX(0); }
 
         .cart-header {
-            padding: 40px;
+            padding: 40px 40px 20px;
             border-bottom: 0.5px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -221,6 +223,38 @@
             font-weight: 300;
             background: none; border: none;
             color: var(--mid);
+        }
+
+        .shipping-motivator {
+            padding: 0 40px 20px;
+            border-bottom: 0.5px solid var(--border);
+            background: #fdfdfc;
+        }
+        
+        .motivator-text {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            color: var(--black);
+            text-align: center;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.4s ease, background-color 0.4s ease;
+        }
+        
+        .progress-bar-fill.success {
+            background: var(--success);
         }
 
         .cart-items {
@@ -308,6 +342,31 @@
         }
         
         .whatsapp-checkout:hover { background: #333; }
+
+        /* ── ANIMATED HOVER LINKS ── */
+        .nav-link, .footer-col a, .footer-bottom-links a {
+            position: relative;
+            display: inline-block;
+            width: max-content;
+        }
+
+        .nav-link::after, .footer-col a::after, .footer-bottom-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .nav-link:hover::after, .footer-col a:hover::after, .footer-bottom-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
 
         /* ── MEGA FOOTER ── */
         .mega-footer {
@@ -477,7 +536,7 @@
             </button>
         </div>
         <a href="index.html" class="logo-container">
-            <img src="logo.png" alt="Syed Fragrances Logo"> 
+            <img src="logo.png" alt="Syed Fragrances Logo" loading="lazy"> 
         </a>
         <div class="header-right">
             <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
@@ -544,7 +603,6 @@
                 </form>
                 <p class="newsletter-disclaimer">By providing your email, you agree to receive marketing email and accept our <a href="privacy.html" style="display:inline; text-decoration:underline;">Privacy Policy</a> and <a href="terms.html" style="display:inline; text-decoration:underline;">Terms</a>.</p>
                 
-                <!-- Simple Text Payment Icons Placeholder -->
                 <div style="margin-top: 20px; color: var(--white); font-weight: 500; font-size: 11px; letter-spacing: 0.1em;">
                     VISA | MASTERCARD | EASYPAISA | JAZZCASH
                 </div>
@@ -562,12 +620,19 @@
         </div>
     </footer>
 
-    <!-- Cart Modal -->
     <div id="cart-modal">
         <div class="cart-header">
             <h2>Your Cart</h2>
             <button class="close-btn" onclick="toggleCart()">×</button>
         </div>
+        
+        <div class="shipping-motivator">
+            <div class="motivator-text" id="motivator-message">Add Rs. 5,000 more to unlock Free Shipping</div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="motivator-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+
         <div class="cart-items" id="cart-items-container"></div>
         <div class="cart-footer">
             <h3 style="margin-bottom: 24px; display: flex; justify-content: space-between; font-family: var(--serif); font-size: 24px; font-weight: 400;">
@@ -589,7 +654,6 @@
         </div>
     </div>
 
-    <!-- Custom Order Confirmation Modal -->
     <div id="confirmation-modal">
         <div class="confirm-content">
             <h2 style="font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px;">Thank You</h2>
@@ -601,7 +665,8 @@
 
     <script>
         const WHATSAPP_NUMBER = ""; 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9agwPIKPaYMcVPkz_vScT5WTD4C32j_LIpEnUfgsUOi-7rHATy90CA1SgSi_mpU6c/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
+        const FREE_SHIPPING_THRESHOLD = 5000;
 
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
@@ -627,6 +692,8 @@
             const container = document.getElementById('cart-items-container');
             const countSpan = document.getElementById('cart-count');
             const totalSpan = document.getElementById('cart-total');
+            const msgEl = document.getElementById('motivator-message');
+            const barEl = document.getElementById('motivator-bar');
 
             countSpan.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
             
@@ -660,19 +727,21 @@
 
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
             
-                // Update Free Shipping Motivator
-            let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
-            if (progress >= 100) {
-                barEl.style.width = '100%';
-                barEl.classList.add('success');
-                msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
-                msgEl.style.color = "var(--success)";
-            } else {
-                barEl.style.width = progress + '%';
-                barEl.classList.remove('success');
-                const remaining = FREE_SHIPPING_THRESHOLD - total;
-                msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
-                msgEl.style.color = "var(--black)";
+            // Update Free Shipping Motivator
+            if (msgEl && barEl) {
+                let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
+                if (progress >= 100) {
+                    barEl.style.width = '100%';
+                    barEl.classList.add('success');
+                    msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
+                    msgEl.style.color = "var(--success)";
+                } else {
+                    barEl.style.width = progress + '%';
+                    barEl.classList.remove('success');
+                    const remaining = FREE_SHIPPING_THRESHOLD - total;
+                    msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
+                    msgEl.style.color = "var(--black)";
+                }
             }
         }
 
@@ -719,6 +788,12 @@
                 orderString += `- ${item.quantity}x ${item.name} (${item.size}) - Rs. ${item.price * item.quantity}\n`;
                 total += item.price * item.quantity;
             });
+
+            if (total < FREE_SHIPPING_THRESHOLD) {
+                orderString += `\n*Shipping:* Standard Delivery Charges Apply`;
+            } else {
+                orderString += `\n*Shipping:* FREE`;
+            }
 
             const orderData = {
                 name: name,
@@ -782,7 +857,6 @@
             }
 
             if (cartModal && cartModal.classList.contains('active') && !cartModal.contains(event.target) && cartBtn && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
-                // Bug fix: keep cart open if adjusting quantity
                 if (!document.body.contains(event.target)) return;
                 toggleCart();
             }

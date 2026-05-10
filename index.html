@@ -58,9 +58,6 @@
 
         #nav-drawer.active { transform: translateX(0); }
         .nav-drawer-links { padding: 40px; display: flex; flex-direction: column; gap: 30px; }
-        .nav-link { color: var(--black); text-decoration: none; font-family: var(--serif); font-size: 28px; font-weight: 300; transition: color 0.3s; }
-        .nav-link:hover { color: var(--gold); }
-
         .logo-container { display: flex; justify-content: center; text-decoration: none; }
         .logo-container img { height: 180px; object-fit: contain; }
         .header-right { display: flex; justify-content: flex-end; }
@@ -76,9 +73,7 @@
             background: var(--black); color: var(--white); padding: 10px 0; overflow: hidden;
             font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; position: relative;
         }
-        .ticker-content {
-            display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite;
-        }
+        .ticker-content { display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite; }
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
@@ -89,8 +84,13 @@
             height: 80vh; background-color: var(--black); display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; padding: 0 5%; position: relative; overflow: hidden;
         }
-        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.4; }
-        .hero-content { position: relative; z-index: 1; color: #ffffff; }
+        
+        /* New Unicorn Studio Canvas Background */
+        .unicorn-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.85; pointer-events: none;
+        }
+
+        .hero-content { position: relative; z-index: 1; color: #ffffff; pointer-events: none; }
         .hero-label { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
         .hero h1 { font-family: var(--serif); font-size: clamp(48px, 6vw, 80px); font-weight: 300; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.01em; color: #ffffff; }
         .hero h1 em { font-style: italic; color: var(--gold); }
@@ -135,8 +135,8 @@
 
         /* ── LOVED BY SECTION ── */
         .loved-section { padding: 80px 5%; background: #fdfdfc; text-align: center; border-top: 0.5px solid var(--border); }
-        .loved-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; /* Firefox */ }
-        .loved-gallery::-webkit-scrollbar { display: none; /* Safari and Chrome */ }
+        .loved-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; }
+        .loved-gallery::-webkit-scrollbar { display: none; }
         .loved-card { min-width: 280px; height: 380px; flex-shrink: 0; background: #eee; overflow: hidden; position: relative; }
         .loved-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%); transition: all 0.5s ease; cursor: pointer; }
         .loved-card:hover img { filter: grayscale(0%); transform: scale(1.03); }
@@ -166,6 +166,18 @@
         .checkbox-container input { margin-right: 10px; width: auto; cursor: pointer; }
         .whatsapp-checkout { width: 100%; padding: 18px; background: var(--black); color: var(--white); border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.2em; font-family: var(--sans); font-size: 11px; margin-top: 12px; transition: background 0.3s; }
         .whatsapp-checkout:hover { background: #333; }
+
+        /* ── ANIMATED HOVER LINKS ── */
+        .nav-link, .footer-col a, .footer-bottom-links a {
+            position: relative; display: inline-block; width: max-content;
+        }
+        .nav-link::after, .footer-col a::after, .footer-bottom-links a::after {
+            content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 1px; bottom: 0; left: 0;
+            background-color: var(--gold); transform-origin: bottom right; transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .nav-link:hover::after, .footer-col a:hover::after, .footer-bottom-links a:hover::after {
+            transform: scaleX(1); transform-origin: bottom left;
+        }
 
         /* ── MEGA FOOTER ── */
         .mega-footer { background: var(--black); color: var(--white); border-top: 0.5px solid var(--border); padding: 80px 5% 20px; font-family: var(--sans); }
@@ -218,7 +230,7 @@
             </button>
         </div>
         <a href="index.html" class="logo-container">
-            <img src="logo.png" alt="Syed Fragrances Logo"> 
+            <img src="logo.png" alt="Syed Fragrances Logo" loading="lazy"> 
         </a>
         <div class="header-right">
             <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
@@ -227,14 +239,13 @@
 
     <div class="promo-ticker">
         <div class="ticker-content">
-            FREE SHIPPING ON ORDERS OVER RS. 4980 &nbsp; • &nbsp; 14-DAY SUNNAH-COMPLIANT RETURNS &nbsp; • &nbsp; PREMIUM HIGH-CONCENTRATION IMPRESSIONS &nbsp; • &nbsp; FREE SHIPPING ON ORDERS OVER RS. 4980 &nbsp; • &nbsp; 14-DAY SUNNAH-COMPLIANT RETURNS &nbsp; • &nbsp; PREMIUM HIGH-CONCENTRATION IMPRESSIONS
+            FREE SHIPPING ON ORDERS OVER RS. 5000 &nbsp; • &nbsp; 14-DAY SUNNAH-COMPLIANT RETURNS &nbsp; • &nbsp; PREMIUM HIGH-CONCENTRATION IMPRESSIONS &nbsp; • &nbsp; FREE SHIPPING ON ORDERS OVER RS. 5000 &nbsp; • &nbsp; 14-DAY SUNNAH-COMPLIANT RETURNS &nbsp; • &nbsp; PREMIUM HIGH-CONCENTRATION IMPRESSIONS
         </div>
     </div>
 
     <section class="hero">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <source src="hero.mp4" type="video/mp4">
-        </video>
+        <div class="unicorn-bg" data-us-project="3zqc1Rj34l9nH76218Fk"></div>
+        
         <div class="hero-content">
             <p class="hero-label">Est. 2024</p>
             <h1>The art of<br><em>invisible</em> presence</h1>
@@ -285,10 +296,11 @@
         <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 24px auto 40px auto;"></div>
         
         <div class="loved-gallery">
-            <div class="loved-card"><img src="IMG-20260427-WA0018.jpeg" alt="Syed Fragrances Loved by Rizwan Mehmood"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0021.jpeg" alt="Syed Fragrances Loved by Mehran Mumtaz"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0024.jpeg" alt="Syed Fragrances Loved by Junaid Jamshed Niazi"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0022.jpeg" alt="Syed Fragrances Loved by Syed Fazal Hussain"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0018.jpeg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0020.jpg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0021.jpeg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0024.jpg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0022.jpg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
         </div>
     </section>
 
@@ -334,8 +346,8 @@
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-links">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
             </div>
             <div>&copy; 2026 Syed Fragrances. All Rights Reserved.</div>
         </div>
@@ -398,7 +410,7 @@
     <script>
         const WHATSAPP_NUMBER = ""; 
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
-        const FREE_SHIPPING_THRESHOLD = 4980;
+        const FREE_SHIPPING_THRESHOLD = 5000;
 
         const products = [
             { id: 1, name: "Impression of Sensation", originalPrice: 2700, price: 2490, size: "50 ml", image: "sensation.png", category: "Unisex", tags: ["warm", "woody", "evening", "professional"], description: "A quiet embrace of warm amber and milky woods that melts into the skin. It is the scent of unspoken confidence, resting softly yet leaving a profound memory." },
@@ -474,7 +486,7 @@
             }
 
             grid.innerHTML = productsToRender.map(product => {
-                let imageHtml = product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` : `Image Space`;
+                let imageHtml = product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">` : `Image Space`;
                 return `
                 <div class="product-card">
                     <div class="product-placeholder" onclick="openProductView(${product.id})" ${product.image ? 'style="padding: 0; background: transparent;"' : ''}>
@@ -578,18 +590,20 @@
 
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
 
-            let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
-            if (progress >= 100) {
-                barEl.style.width = '100%';
-                barEl.classList.add('success');
-                msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
-                msgEl.style.color = "var(--success)";
-            } else {
-                barEl.style.width = progress + '%';
-                barEl.classList.remove('success');
-                const remaining = FREE_SHIPPING_THRESHOLD - total;
-                msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
-                msgEl.style.color = "var(--black)";
+            if (msgEl && barEl) {
+                let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
+                if (progress >= 100) {
+                    barEl.style.width = '100%';
+                    barEl.classList.add('success');
+                    msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
+                    msgEl.style.color = "var(--success)";
+                } else {
+                    barEl.style.width = progress + '%';
+                    barEl.classList.remove('success');
+                    const remaining = FREE_SHIPPING_THRESHOLD - total;
+                    msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
+                    msgEl.style.color = "var(--black)";
+                }
             }
         }
 
@@ -658,6 +672,9 @@
             }
         });
 
+        // Initialize the Unicorn Studio script
+        !function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();
+        
         renderProducts();
         updateCartUI(); 
     </script>

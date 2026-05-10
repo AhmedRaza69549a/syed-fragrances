@@ -76,7 +76,9 @@
             background: var(--black); color: var(--white); padding: 10px 0; overflow: hidden;
             font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; position: relative;
         }
-        .ticker-content { display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite; }
+        .ticker-content {
+            display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite;
+        }
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
@@ -87,12 +89,8 @@
             height: 80vh; background-color: var(--black); display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; padding: 0 5%; position: relative; overflow: hidden;
         }
-        
-        .unicorn-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.85; pointer-events: none;
-        }
-
-        .hero-content { position: relative; z-index: 1; color: #ffffff; pointer-events: none; }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.4; }
+        .hero-content { position: relative; z-index: 1; color: #ffffff; }
         .hero-label { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
         .hero h1 { font-family: var(--serif); font-size: clamp(48px, 6vw, 80px); font-weight: 300; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.01em; color: #ffffff; }
         .hero h1 em { font-style: italic; color: var(--gold); }
@@ -137,8 +135,8 @@
 
         /* ── LOVED BY SECTION ── */
         .loved-section { padding: 80px 5%; background: #fdfdfc; text-align: center; border-top: 0.5px solid var(--border); }
-        .loved-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; }
-        .loved-gallery::-webkit-scrollbar { display: none; }
+        .loved-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; /* Firefox */ }
+        .loved-gallery::-webkit-scrollbar { display: none; /* Safari and Chrome */ }
         .loved-card { min-width: 280px; height: 380px; flex-shrink: 0; background: #eee; overflow: hidden; position: relative; }
         .loved-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%); transition: all 0.5s ease; cursor: pointer; }
         .loved-card:hover img { filter: grayscale(0%); transform: scale(1.03); }
@@ -245,7 +243,7 @@
             </button>
         </div>
         <a href="index.html" class="logo-container">
-            <img src="logo.png" alt="Syed Fragrances Logo" loading="lazy"> 
+            <img src="logo.png" alt="Syed Fragrances Logo"> 
         </a>
         <div class="header-right">
             <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
@@ -259,7 +257,9 @@
     </div>
 
     <section class="hero">
-        <div class="unicorn-bg" data-us-project="3zqc1Rj34l9nH76218Fk"></div>
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="hero.mp4" type="video/mp4">
+        </video>
         <div class="hero-content">
             <p class="hero-label">Est. 2024</p>
             <h1>The art of<br><em>invisible</em> presence</h1>
@@ -310,11 +310,10 @@
         <div style="height: 0.5px; background: var(--gold); width: 40px; margin: 24px auto 40px auto;"></div>
         
         <div class="loved-gallery">
-            <div class="loved-card"><img src="IMG-20260427-WA0018.jpeg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0020.jpg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0021.jpeg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0024.jpg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
-            <div class="loved-card"><img src="IMG-20260427-WA0022.jpg" alt="Syed Fragrances Celebrity Sighting" loading="lazy"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0018.jpeg" alt="Syed Fragrances Loved by Rizwan Mehmood"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0021.jpeg" alt="Syed Fragrances Loved by Mehran Mumtaz"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0024.jpeg" alt="Syed Fragrances Loved by Junaid Jamshed Niazi"></div>
+            <div class="loved-card"><img src="IMG-20260427-WA0022.jpeg" alt="Syed Fragrances Loved by Syed Fazal Hussain"></div>
         </div>
     </section>
 
@@ -334,9 +333,10 @@
             </div>
             <div class="footer-col">
                 <h4>Customer Support</h4>
-                <a href="contact.html">Contact Us</a>
+                <a href="#">Contact Us</a>
                 <a href="shipping.html">Delivery & Orders</a>
                 <a href="returns.html">Returns & Exchanges</a>
+                <a href="#">Track My Order</a>
                 <a href="faq.html">FAQs</a>
             </div>
             <div class="footer-col">
@@ -359,8 +359,8 @@
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-links">
-                <a href="terms.html">Terms & Conditions</a>
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
             </div>
             <div>&copy; 2026 Syed Fragrances. All Rights Reserved.</div>
         </div>
@@ -373,7 +373,7 @@
         </div>
 
         <div class="shipping-motivator">
-            <div class="motivator-text" id="motivator-message">Add Rs. 4,980 more to unlock Free Shipping</div>
+            <div class="motivator-text" id="motivator-message">Add Rs. 5,000 more to unlock Free Shipping</div>
             <div class="progress-bar-container">
                 <div class="progress-bar-fill" id="motivator-bar" style="width: 0%;"></div>
             </div>
@@ -499,7 +499,7 @@
             }
 
             grid.innerHTML = productsToRender.map(product => {
-                let imageHtml = product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">` : `Image Space`;
+                let imageHtml = product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` : `Image Space`;
                 return `
                 <div class="product-card">
                     <div class="product-placeholder" onclick="openProductView(${product.id})" ${product.image ? 'style="padding: 0; background: transparent;"' : ''}>
@@ -685,9 +685,6 @@
             }
         });
 
-        // Initialize the Unicorn Studio script
-        !function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();
-        
         renderProducts();
         updateCartUI(); 
     </script>

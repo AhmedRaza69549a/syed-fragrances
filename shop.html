@@ -62,7 +62,7 @@
 
         #nav-drawer {
             display: flex; position: fixed; top: 0; left: 0; width: 100%; max-width: 350px;
-            height: 100vh; background: var(--white); border-right: 0.5px solid var(--border);
+            height: 100vh; height: 100dvh; background: var(--white); border-right: 0.5px solid var(--border);
             box-shadow: 10px 0 30px rgba(0,0,0,0.05); z-index: 2000; flex-direction: column;
             transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
@@ -152,7 +152,7 @@
 
         /* ── CART MODAL ── */
         #cart-modal {
-            display: flex; position: fixed; top: 0; right: 0; width: 100%; max-width: 450px; height: 100vh;
+            display: flex; position: fixed; top: 0; right: 0; width: 100%; max-width: 450px; height: 100vh; height: 100dvh;
             background: var(--white); border-left: 0.5px solid var(--border); box-shadow: -10px 0 30px rgba(0,0,0,0.05);
             z-index: 1000; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
@@ -223,15 +223,35 @@
         .footer-bottom-links a { color: var(--mid); text-decoration: none; margin-right: 20px; transition: color 0.3s; display: inline-block; }
         .footer-bottom-links a:hover { color: var(--gold); }
 
-        /* MODALS */
-        #product-view-modal, #confirmation-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(5px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
-        .pv-content, .confirm-content { background: var(--white); width: 100%; max-width: 900px; display: flex; flex-wrap: wrap; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        /* MODALS (MOBILE FIXES APPLIED) */
+        #product-view-modal, #confirmation-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh; 
+            background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(5px); z-index: 3000; 
+            justify-content: center; align-items: center; padding: 20px; overflow-y: auto; 
+        }
+        
+        .pv-content, .confirm-content { 
+            background: var(--white); width: 100%; max-width: 900px; display: flex; flex-wrap: wrap; 
+            position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); max-height: 90vh; 
+            overflow-y: auto; border-radius: 2px; 
+        }
+        
         .confirm-content { max-width: 450px; padding: 60px 40px; text-align: center; display: block; }
-        .pv-close { position: absolute; top: 20px; right: 20px; font-size: 32px; background: none; border: none; color: var(--black); cursor: pointer; z-index: 10; }
+        
+        /* High-Visibility Floating Close Button */
+        .pv-close { 
+            position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; 
+            background: var(--white); border: none; border-radius: 50%; color: var(--black); 
+            cursor: pointer; z-index: 100; display: flex; justify-content: center; align-items: center; 
+            font-size: 26px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); line-height: 1; 
+        }
+        
         .pv-image-container { flex: 1 1 300px; background: #0d0d0d; min-height: 400px; display: flex; justify-content: center; align-items: center; color: var(--mid); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; overflow: hidden; }
         .pv-details { flex: 1 1 300px; padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; }
         .pv-details h2 { font-family: var(--serif); font-size: 36px; font-weight: 300; margin-bottom: 16px; line-height: 1.2; }
         .pv-desc { font-size: 14px; color: var(--mid); margin-bottom: 30px; }
+
+        @media (max-width: 768px) { .logo-container img { height: 120px; } }
     </style>
 </head>
 <body>

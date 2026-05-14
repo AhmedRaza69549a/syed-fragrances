@@ -95,7 +95,7 @@
         .cart-qty-btn { background: transparent; border: none; padding: 4px 10px; cursor: pointer; font-size: 14px; color: var(--black); transition: background 0.2s; }
         .cart-qty-btn:hover { background: #eaeaea; }
         .cart-footer { padding: 40px; background: #F2EFE8; border-top: 0.5px solid var(--border); }
-        .checkout-form input[type="text"], .checkout-form input[type="tel"] { width: 100%; padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); font-family: var(--sans); font-size: 12px; background: var(--white); letter-spacing: 0.05em; outline: none; }
+        .checkout-form input[type="text"], .checkout-form input[type="tel"], .checkout-form input[type="email"] { width: 100%; padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); font-family: var(--sans); font-size: 12px; background: var(--white); letter-spacing: 0.05em; outline: none; }
         .checkout-form input:focus { border-color: var(--black); }
         .checkbox-container { display: flex; align-items: center; font-family: var(--sans); font-size: 13px; margin-bottom: 12px; cursor: pointer; }
         .checkbox-container input { margin-right: 10px; width: auto; cursor: pointer; }
@@ -170,7 +170,7 @@
             </button>
         </div>
         <a href="index.html" class="logo-container">
-            <img src="logo.png" alt="Syed Fragrances Logo" loading="lazy"> 
+            <img src="logo.png" alt="Syed Fragrances Logo"> 
         </a>
         <div class="header-right">
             <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
@@ -289,7 +289,6 @@
     <script>
         const WHATSAPP_NUMBER = ""; 
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
-        const FREE_SHIPPING_THRESHOLD = 5000;
 
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
@@ -315,8 +314,6 @@
             const container = document.getElementById('cart-items-container');
             const countSpan = document.getElementById('cart-count');
             const totalSpan = document.getElementById('cart-total');
-            const msgEl = document.getElementById('motivator-message');
-            const barEl = document.getElementById('motivator-bar');
 
             countSpan.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
             
@@ -349,23 +346,6 @@
             }
 
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
-            
-            // Update Free Shipping Motivator
-            if (msgEl && barEl) {
-                let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
-                if (progress >= 100) {
-                    barEl.style.width = '100%';
-                    barEl.classList.add('success');
-                    msgEl.innerHTML = `<strong>You've unlocked Free Shipping! 🎉</strong>`;
-                    msgEl.style.color = "var(--success)";
-                } else {
-                    barEl.style.width = progress + '%';
-                    barEl.classList.remove('success');
-                    const remaining = FREE_SHIPPING_THRESHOLD - total;
-                    msgEl.innerHTML = `Add <strong>Rs. ${remaining.toLocaleString()}</strong> more to unlock Free Shipping`;
-                    msgEl.style.color = "var(--black)";
-                }
-            }
         }
 
         function toggleCart() {
@@ -411,12 +391,6 @@
                 orderString += `- ${item.quantity}x ${item.name} (${item.size}) - Rs. ${item.price * item.quantity}\n`;
                 total += item.price * item.quantity;
             });
-
-            if (total < FREE_SHIPPING_THRESHOLD) {
-                orderString += `\n*Shipping:* Standard Delivery Charges Apply`;
-            } else {
-                orderString += `\n*Shipping:* FREE`;
-            }
 
             const orderData = {
                 name: name,
@@ -480,6 +454,7 @@
             }
 
             if (cartModal && cartModal.classList.contains('active') && !cartModal.contains(event.target) && cartBtn && !cartBtn.contains(event.target) && !event.target.classList.contains('add-to-cart')) {
+                // Bug fix: keep cart open if adjusting quantity
                 if (!document.body.contains(event.target)) return;
                 toggleCart();
             }

@@ -44,7 +44,7 @@
         .hamburger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
         #nav-drawer {
-            display: flex; position: fixed; top: 0; left: 0; width: 100%; max-width: 350px; height: 100vh;
+            display: flex; position: fixed; top: 0; left: 0; width: 100%; max-width: 350px; height: 100vh; height: 100dvh;
             background: var(--white); border-right: 0.5px solid var(--border); box-shadow: 10px 0 30px rgba(0,0,0,0.05);
             z-index: 2000; flex-direction: column; transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
@@ -72,7 +72,7 @@
         .founder-title { font-family: var(--serif); font-size: 32px; font-weight: 300; margin-bottom: 16px; margin-top: 60px; }
 
         #cart-modal {
-            display: flex; position: fixed; top: 0; right: 0; width: 100%; max-width: 450px; height: 100vh;
+            display: flex; position: fixed; top: 0; right: 0; width: 100%; max-width: 450px; height: 100vh; height: 100dvh;
             background: var(--white); border-left: 0.5px solid var(--border); box-shadow: -10px 0 30px rgba(0,0,0,0.05);
             z-index: 1000; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
@@ -95,8 +95,11 @@
         .cart-qty-btn { background: transparent; border: none; padding: 4px 10px; cursor: pointer; font-size: 14px; color: var(--black); transition: background 0.2s; }
         .cart-qty-btn:hover { background: #eaeaea; }
         .cart-footer { padding: 40px; background: #F2EFE8; border-top: 0.5px solid var(--border); }
-        .checkout-form input[type="text"], .checkout-form input[type="tel"] { width: 100%; padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); font-family: var(--sans); font-size: 12px; background: var(--white); letter-spacing: 0.05em; outline: none; }
-        .checkout-form input:focus { border-color: var(--black); }
+        
+        /* Fixed Form CSS */
+        .checkout-form input[type="text"], .checkout-form input[type="tel"], .checkout-form input[type="email"], .checkout-form textarea { width: 100%; padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); font-family: var(--sans); font-size: 12px; background: var(--white); letter-spacing: 0.05em; outline: none; }
+        .checkout-form input:focus, .checkout-form textarea:focus { border-color: var(--black); }
+        
         .checkbox-container { display: flex; align-items: center; font-family: var(--sans); font-size: 13px; margin-bottom: 12px; cursor: pointer; }
         .checkbox-container input { margin-right: 10px; width: auto; cursor: pointer; }
         .whatsapp-checkout { width: 100%; padding: 18px; background: var(--black); color: var(--white); border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.2em; font-family: var(--sans); font-size: 11px; margin-top: 12px; transition: background 0.3s; }
@@ -144,8 +147,28 @@
         .footer-bottom-links a { color: var(--mid); text-decoration: none; margin-right: 20px; transition: color 0.3s; display: inline-block; }
         .footer-bottom-links a:hover { color: var(--gold); }
 
-        #confirmation-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(5px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
-        .confirm-content { background: var(--white); width: 100%; max-width: 450px; padding: 60px 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; }
+        /* MODALS (MOBILE FIXES APPLIED) */
+        #product-view-modal, #confirmation-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh; 
+            background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(5px); z-index: 3000; 
+            justify-content: center; align-items: center; padding: 20px; overflow-y: auto; 
+        }
+        
+        .pv-content, .confirm-content { 
+            background: var(--white); width: 100%; max-width: 900px; display: flex; flex-wrap: wrap; 
+            position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); max-height: 90vh; 
+            overflow-y: auto; border-radius: 2px; 
+        }
+        
+        .confirm-content { max-width: 450px; padding: 60px 40px; text-align: center; display: block; }
+        
+        .pv-close { 
+            position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; 
+            background: var(--white); border: none; border-radius: 50%; color: var(--black); 
+            cursor: pointer; z-index: 100; display: flex; justify-content: center; align-items: center; 
+            font-size: 26px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); line-height: 1; 
+        }
+
         @media (max-width: 768px) { .logo-container img { height: 120px; } }
     </style>
 </head>
@@ -253,7 +276,7 @@
         </div>
 
         <div class="shipping-motivator">
-            <div class="motivator-text" id="motivator-message">Add Rs. 5,000 more to unlock Free Shipping</div>
+            <div class="motivator-text" id="motivator-message">Add Rs. 4,980 more to unlock Free Shipping</div>
             <div class="progress-bar-container">
                 <div class="progress-bar-fill" id="motivator-bar" style="width: 0%;"></div>
             </div>
@@ -289,7 +312,7 @@
     <script>
         const WHATSAPP_NUMBER = ""; 
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCdf2bQI0PbY9k7UHqgOWAdQbXugOUAXKugXPT8eZja9hvbAK1l35y3w3b4DyYt44/exec"; 
-        const FREE_SHIPPING_THRESHOLD = 5000;
+        const FREE_SHIPPING_THRESHOLD = 4980;
 
         let cart = JSON.parse(localStorage.getItem('syedCart')) || [];
 
@@ -349,8 +372,7 @@
             }
 
             totalSpan.innerText = `Rs. ${total.toLocaleString()}`;
-            
-            // Update Free Shipping Motivator
+
             if (msgEl && barEl) {
                 let progress = (total / FREE_SHIPPING_THRESHOLD) * 100;
                 if (progress >= 100) {
